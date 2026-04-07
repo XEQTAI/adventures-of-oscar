@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar QR Code - The Adventures of Oscar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .qr-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .qr-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f1419;
+            margin-bottom: 8px;
+        }
+        
+        .qr-subtitle {
+            font-size: 16px;
+            color: #536471;
+            margin-bottom: 32px;
+        }
+        
+        #qrCode {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 32px 0;
+            display: inline-block;
+        }
+        
+        .instructions {
+            background: #f7f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 32px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            color: #0f1419;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .instructions ol {
+            color: #536471;
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 24px;
+            background: #1d9bf0;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 15px;
+        }
+        
+        .back-button:hover {
+            background-color: #1a8cd8;
+        }
+        
+        .download-section {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid #eff3f4;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            transition: opacity 0.2s;
+        }
+        
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .emoji-decoration {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-container">
+        <div class="emoji-decoration">🐱</div>
+        <div class="qr-title">The Adventures of Oscar</div>
+        <div class="qr-subtitle">Scan to join the community</div>
+        
+        <div id="qrCode"></div>
+        
+        <div class="instructions">
+            <h3>📱 How to use:</h3>
+            <ol>
+                <li>Point your phone camera at the QR code above</li>
+                <li>Tap the notification that appears</li>
+                <li>Share your Oscar sighting in the feed</li>
+                <li>See what others have discovered!</li>
+            </ol>
+        </div>
+        
+        <div class="instructions">
+            <h3>💡 Tip:</h3>
+            <p style="color: #536471;">You can also bookmark or share this page with friends. Just copy the link: <br><br><code style="background: white; padding: 8px 12px; border-radius: 8px; font-family: monospace; font-size: 12px;">https://xeqtai.github.io/adventures-of-oscar/qr.html</code></p>
+        </div>
+        
+        <button class="download-btn" onclick="downloadQR()">⬇️ Download QR Code</button>
+        
+        <a href="index.html" class="back-button">← Back to Feed</a>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        // Generate QR code pointing to the main site
+        function generateQR() {
+            const qrContainer = document.getElementById('qrCode');
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: 'https://xeqtai.github.io/adventures-of-oscar/',
+                width: 350,
+                height: 350,
+                colorDark: "#667eea",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'Oscar_QR_Code.png';
+                link.click();
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', generateQR);
+    </script>
+</body>
+</html>
