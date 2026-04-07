@@ -1,80 +1,85 @@
-# 🐱 The Adventures of Oscar
+# Oscar - Anonymous Social Feed
 
-An interactive community chat feed where anyone can share updates about Oscar, the mystery cat who visits every day!
+A modern, minimal social platform where anyone can discover and share messages through QR codes. Each QR code leads to its own private feed with an anonymous community.
 
-## 📱 Quick Start
+## 🌐 Live Site
 
-**Live Site:** https://xeqtai.github.io/adventures-of-oscar/
-
-### Scan the QR Code to Join
-Just open the site on your phone and share your Oscar sightings with the community!
+**[https://xeqtai.github.io/adventures-of-oscar/](https://xeqtai.github.io/adventures-of-oscar/)**
 
 ## ✨ Features
 
-✅ **QR Code Login** - Scan to share instantly on mobile  
-✅ **Live Feed** - See all Oscar sightings in real-time  
-✅ **Hashtag Support** - Organize stories with hashtags like #oscarsighting  
-✅ **Community Stats** - Track total messages and contributors  
-✅ **Local Storage** - All posts persist in your browser  
-✅ **Responsive Design** - Works perfectly on mobile and desktop  
-✅ **Image Ready** - Support for AI-generated images of Oscar's adventures  
+🐱 **Anonymous Posts** - No usernames, just vibes and feline avatars  
+🦁 **Feline Avatars** - Random lion, tiger, leopard, and cat emoji avatars for each post  
+📱 **QR Code Objects** - Each QR code is its own social object with its own feed  
+🗂️ **Collection System** - Scan multiple QR codes and see them in your collection sidebar  
+🎨 **Modern Minimal Design** - Dark theme, sleek UI, inspired by modern social apps  
+💬 **Single-Page Feed** - Everything on one page, smooth scrolling experience  
+🔗 **Persistent Data** - All posts saved locally in browser, survives page refreshes  
+📸 **Image Support** - Posts can include images  
+💫 **Interaction Metrics** - Likes, replies, and share counts
 
-## 📝 How to Use
+## 🏗️ How It Works
 
-1. Visit the site or scan the QR code
-2. Enter your name/nickname
-3. Share your Oscar encounter story
-4. Add hashtags (optional)
-5. Click "Post to Feed" to share with the community
+### For Visitors
+1. **Scan a QR code** using the + button or your camera
+2. **Name the collection** (optional - auto-generates if left blank)
+3. **See the feed** - all anonymous posts from people who scanned this same QR
+4. **Post something** - share anonymously with a random feline avatar
+5. **Scan more codes** - build your collection in the sidebar
 
-## 🎨 Planned Features
+### For Creators
+1. **Create a QR code** pointing to this site with a collection ID
+2. **Share the QR code** anywhere (poster, product, location, etc.)
+3. **Watch the community** - anyone who scans builds that object's feed
 
-- **AI-Generated Images**: Once we have a photo of Oscar, we'll generate creative images of him in different scenarios
-- **Image Posts**: Posts with AI-generated Oscar images with captions
-- **Story Collections**: Group posts by date and themes
+## 🎯 Use Cases
 
-## 🚀 Adding Oscar Images
+- **Locations** - "Scan here to share messages about this place"
+- **Products** - "Scan to see reviews and stories about this item"
+- **Events** - "Scan to join the community discussing this event"
+- **Cats** - "Each cat gets its own anonymous message board"
 
-When you have a photo of Oscar ready:
+## 🎨 Design Philosophy
 
-1. The app will generate AI images of Oscar doing cool things
-2. Share these images as posts in the feed
-3. Add engaging captions and hashtags
+**Minimal & Modern**: No noise, no usernames, no notifications. Just you and the community.  
+**Anonymous & Safe**: No profiles, no followers, no permanence anxiety.  
+**Fast & Responsive**: Works on mobile, tablet, desktop instantly.  
+**Privacy-First**: Everything stored locally, no backend tracking.  
 
-## 💾 Data Storage
+## 🔧 Technical Stack
 
-All posts are stored locally in your browser using localStorage. They won't sync between devices, but each visitor can see the community's stories.
-
-## 🎯 Popular Hashtags
-
-- #oscarsighting
-- #mysterycatlife
-- #dailyvisitor
-- #theadventuresofosc
-- #friendlycat
-
-## 📋 Sample Initial Posts
-
-The feed starts with example posts from Oscar scouts to get the conversation started:
-
-- "Just spotted Oscar lounging in the garden..."
-- "Oscar visited around midday!"
-- "Welcome to The Adventures of Oscar!"
-
-## 🛠️ Technical Details
-
-**Tech Stack:**
 - Pure HTML5, CSS3, JavaScript (no frameworks)
-- QRCode.js for QR code generation
-- Browser localStorage for data persistence
+- Browser localStorage for persistence
+- Responsive design (works on all devices)
 - GitHub Pages for hosting
 
-**Browser Support:** All modern browsers (Chrome, Firefox, Safari, Edge)
+## 📱 Browser Support
 
-## 📧 Questions?
+All modern browsers (Chrome, Firefox, Safari, Edge)
 
-Share them in the feed with #questions hashtag!
+## 🐱 Feline Types
+
+The app includes avatars for:
+- 🦁 Lion
+- 🐯 Tiger
+- 🐆 Leopard / Cheetah / Jaguar
+- 🐱 House Cat / Cougar / Lynx / Puma / Panther
+
+Each post gets a random feline, giving the feed a playful, cohesive personality.
+
+## 💡 Tips
+
+- **Save collections** - Your scanned QR codes are saved in the sidebar
+- **Keyboard shortcuts** - Ctrl+Enter to post
+- **Dark theme** - Optimized for night use
+- **One page** - No navigation needed, just scroll
+
+## 🚀 Getting Started
+
+1. Visit the site
+2. Click the + button or scan a QR code
+3. Start posting!
 
 ---
 
-**Made with ❤️ for Oscar** | Updated: April 7, 2026
+**Made with ❤️ for anonymous communities** | Modern Social Design
