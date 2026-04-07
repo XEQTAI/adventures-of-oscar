@@ -12,391 +12,326 @@
         }
         
         :root {
-            --bg-primary: #0f0f0f;
-            --bg-secondary: #1a1a1a;
-            --bg-tertiary: #252525;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent: #00d4ff;
-            --accent-dark: #0099cc;
-            --border: #2a2a2a;
+            --black: #000000;
+            --white: #ffffff;
+            --gray-1: #f5f5f5;
+            --gray-2: #e8e8e8;
+            --gray-3: #d0d0d0;
+            --gray-4: #808080;
+            --gray-5: #404040;
+            --gray-6: #1a1a1a;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: var(--white);
+            color: var(--black);
         }
         
-        .app-container {
-            display: flex;
-            height: 100vh;
-            gap: 0;
-        }
-        
-        /* LEFT SIDEBAR - SCANNED OBJECTS */
-        .sidebar {
-            width: 280px;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            padding: 16px 0;
         }
         
-        .sidebar-header {
-            padding: 16px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 8px;
-        }
-        
-        .sidebar-items {
-            flex: 1;
-            overflow-y: auto;
-        }
-        
-        .sidebar-item {
-            padding: 12px 16px;
-            cursor: pointer;
-            border-left: 3px solid transparent;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .sidebar-item:hover {
-            background: var(--bg-tertiary);
-        }
-        
-        .sidebar-item.active {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent);
-            border-left-color: var(--accent);
-        }
-        
-        .sidebar-item-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--bg-tertiary);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
-        .sidebar-actions {
-            padding: 16px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .qr-trigger {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        
-        .qr-trigger:hover {
-            background: var(--accent-dark);
-        }
-        
-        /* MAIN FEED */
-        .feed-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-primary);
-        }
-        
-        .feed-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
-            background: rgba(15, 15, 15, 0.8);
-            backdrop-filter: blur(10px);
+        /* HEADER */
+        .header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--gray-2);
             position: sticky;
             top: 0;
+            background: var(--white);
             z-index: 100;
         }
         
-        .feed-title {
-            font-size: 20px;
-            font-weight: 600;
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
             letter-spacing: -0.5px;
+            margin-bottom: 4px;
         }
         
-        .feed-subtitle {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
+        .header-subtitle {
+            font-size: 14px;
+            color: var(--gray-4);
+            font-weight: 400;
         }
         
-        .posts-area {
+        /* COMPOSE AREA */
+        .compose {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-2);
+            background: var(--white);
+        }
+        
+        .compose-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .compose-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gray-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            border: 1px solid var(--gray-2);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .compose-avatar:hover {
+            background: var(--gray-2);
+        }
+        
+        .compose-input-area {
+            flex: 1;
+        }
+        
+        .compose-input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            font-family: inherit;
+            color: var(--black);
+            resize: none;
+            line-height: 1.5;
+            max-height: 120px;
+        }
+        
+        .compose-input::placeholder {
+            color: var(--gray-4);
+        }
+        
+        .compose-toolbar {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            border-top: 1px solid var(--gray-2);
+            padding-top: 12px;
+        }
+        
+        .toolbar-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--gray-4);
+            transition: color 0.2s;
+        }
+        
+        .toolbar-btn:hover {
+            color: var(--black);
+        }
+        
+        .compose-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .post-btn {
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .post-btn:hover:not(:disabled) {
+            background: var(--gray-5);
+        }
+        
+        .post-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* FEED */
+        .feed {
             flex: 1;
             overflow-y: auto;
-            scroll-behavior: smooth;
         }
         
         .post {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.2s ease;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--gray-2);
+            transition: background 0.2s;
             cursor: pointer;
-            display: flex;
-            gap: 12px;
         }
         
         .post:hover {
-            background: var(--bg-secondary);
+            background: var(--gray-1);
+        }
+        
+        .post-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
         }
         
         .post-avatar {
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: var(--bg-tertiary);
-            flex-shrink: 0;
+            background: var(--gray-1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            border: 1px solid var(--border);
+            font-size: 24px;
+            flex-shrink: 0;
+            border: 1px solid var(--gray-2);
         }
         
-        .post-content {
+        .post-info {
             flex: 1;
-            min-width: 0;
         }
         
-        .post-header {
+        .post-author-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
         
         .post-author {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: 600;
+            font-size: 15px;
         }
         
         .post-time {
-            font-size: 11px;
-            color: var(--text-secondary);
-            opacity: 0.7;
+            font-size: 13px;
+            color: var(--gray-4);
+        }
+        
+        .post-content {
+            margin-left: 60px;
         }
         
         .post-text {
             font-size: 15px;
             line-height: 1.5;
             margin-bottom: 12px;
-            color: var(--text-primary);
+            color: var(--black);
+        }
+        
+        .post-media {
+            margin-bottom: 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--gray-1);
         }
         
         .post-image {
             width: 100%;
-            max-width: 500px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            object-fit: cover;
+            display: block;
             max-height: 400px;
-            background: var(--bg-tertiary);
+            object-fit: cover;
+        }
+        
+        .post-video {
+            width: 100%;
+            display: block;
+            max-height: 400px;
+            background: var(--black);
         }
         
         .post-actions {
             display: flex;
-            gap: 24px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: space-around;
             margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid var(--gray-2);
+            max-width: 425px;
+            margin-left: 0;
         }
         
         .action-btn {
+            flex: 1;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             background: none;
             border: none;
-            color: var(--text-secondary);
-            font-size: 12px;
+            padding: 8px 0;
             cursor: pointer;
-            transition: color 0.2s ease;
-            padding: 0;
+            color: var(--gray-4);
+            font-size: 13px;
+            transition: color 0.2s;
         }
         
         .action-btn:hover {
-            color: var(--accent);
+            color: var(--black);
         }
         
-        /* MODAL - QR CODE */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
+        /* MEDIA UPLOAD PREVIEW */
+        .media-preview {
+            margin-top: 12px;
+            display: grid;
+            gap: 8px;
+        }
+        
+        .media-preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 200px;
+            background: var(--gray-1);
+        }
+        
+        .media-preview-img, .media-preview-video {
+            max-width: 100%;
+            max-height: 150px;
+            display: block;
+        }
+        
+        .media-preview-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        .modal.active {
-            display: flex;
+        /* FILE INPUT HIDDEN */
+        input[type="file"] {
+            display: none;
         }
         
-        .modal-content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-        
-        .modal-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .modal-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-        
-        #qrCode {
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            margin: 24px 0;
-            display: inline-block;
-        }
-        
-        #qrCode canvas {
-            display: block;
-        }
-        
-        .modal-instructions {
-            text-align: left;
-            background: var(--bg-tertiary);
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin: 16px 0;
-            line-height: 1.8;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-        }
-        
-        .modal-btn {
-            flex: 1;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .modal-btn-primary {
-            background: var(--accent);
-            color: var(--bg-primary);
-        }
-        
-        .modal-btn-primary:hover {
-            background: var(--accent-dark);
-        }
-        
-        .modal-btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-        
-        .modal-btn-secondary:hover {
-            background: rgba(0, 212, 255, 0.1);
-        }
-        
-        /* SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--border);
-        }
-        
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-            
-            .sidebar-item {
-                padding: 12px 8px;
-                justify-content: center;
-            }
-            
-            .sidebar-item-name {
-                display: none;
-            }
-            
-            .feed-container {
-                padding: 0;
-            }
-        }
-        
+        /* EMPTY STATE */
         .empty-state {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            padding: 40px;
+            padding: 60px 20px;
             text-align: center;
-            color: var(--text-secondary);
+            color: var(--gray-4);
         }
         
         .empty-state-icon {
@@ -404,77 +339,98 @@
             margin-bottom: 16px;
         }
         
+        .empty-state-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+        
         .empty-state-text {
             font-size: 14px;
-            margin-bottom: 8px;
+        }
+        
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-2);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-3);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .container {
+                border: none;
+            }
+            
+            .header {
+                padding: 16px 16px;
+            }
+            
+            .header-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- SIDEBAR -->
-        <div class="sidebar">
-            <div class="sidebar-header">Discovered</div>
-            <div class="sidebar-items" id="sidebarItems"></div>
-            <div class="sidebar-actions">
-                <button class="qr-trigger" onclick="openQRModal()">+ Scan QR</button>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-title">Oscar</div>
+            <div class="header-subtitle">Community sightings</div>
+        </div>
+        
+        <!-- COMPOSE -->
+        <div class="compose">
+            <div class="compose-header">
+                <div class="compose-avatar" id="composeAvatar" onclick="changeAvatar()">🦁</div>
+                <div class="compose-input-area">
+                    <textarea 
+                        class="compose-input" 
+                        id="composeText"
+                        placeholder="What's on your mind?"
+                        rows="3"
+                    ></textarea>
+                </div>
+            </div>
+            
+            <div id="mediaPreview" class="media-preview"></div>
+            
+            <div class="compose-toolbar">
+                <button class="toolbar-btn" onclick="document.getElementById('imageInput').click()" title="Add image">🖼️</button>
+                <button class="toolbar-btn" onclick="document.getElementById('videoInput').click()" title="Add video">🎥</button>
+                <button class="toolbar-btn" onclick="addEmoji()" title="Add emoji">😊</button>
+            </div>
+            
+            <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
+            <input type="file" id="videoInput" accept="video/*" onchange="handleVideoUpload(event)">
+            
+            <div class="compose-actions">
+                <button class="post-btn" onclick="publishPost()" id="publishBtn">Post</button>
             </div>
         </div>
         
         <!-- FEED -->
-        <div class="feed-container">
-            <div class="feed-header">
-                <div class="feed-title" id="feedTitle">Welcome to Oscar</div>
-                <div class="feed-subtitle" id="feedSubtitle">All sightings across the community</div>
-            </div>
-            <div class="posts-area" id="postsArea"></div>
-        </div>
+        <div class="feed" id="feed"></div>
     </div>
     
-    <!-- QR MODAL -->
-    <div class="modal" id="qrModal">
-        <div class="modal-content">
-            <div class="modal-title">📱 Scan QR Code</div>
-            <div class="modal-subtitle">Point your camera at any Oscar QR code</div>
-            <div id="qrCode"></div>
-            <div class="modal-instructions">
-                <strong>How it works:</strong><br>
-                • Scan the QR code with your phone camera<br>
-                • Each cat adds to your collection<br>
-                • See all posts from that cat<br>
-                • Share your own sightings
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-primary" onclick="downloadQR()">Download</button>
-                <button class="modal-btn modal-btn-secondary" onclick="closeQRModal()">Close</button>
-            </div>
-        </div>
-    </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         // Feline avatars
-        const felineEmojis = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🧏', '🤺', '🐈'];
+        const felineEmojis = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🐈', '🧟', '🤺'];
         
-        // Get current cat from URL or default to 'oscar-main'
-        let currentCat = new URLSearchParams(window.location.search).get('cat') || 'oscar-main';
-        let cats = JSON.parse(localStorage.getItem('cats')) || {};
-        let allPosts = JSON.parse(localStorage.getItem('allPosts')) || {};
-        
-        // Initialize cat data
-        if (!cats[currentCat]) {
-            cats[currentCat] = {
-                name: 'Oscar',
-                emoji: felineEmojis[Math.floor(Math.random() * felineEmojis.length)],
-                discovered: new Date().toISOString()
-            };
-            localStorage.setItem('cats', JSON.stringify(cats));
-        }
-        
-        if (!allPosts[currentCat]) {
-            allPosts[currentCat] = [];
-        }
-        
+        // Cat images
         const catImages = [
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/0d0c8c9e9d0ba9c1b809adb0b9d3b3a5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182406Z&X-Amz-Expires=3600&X-Amz-Signature=4a1942bafe71c18497fe6bec5a098ff25de039cf2bd12c8c27fea37fc1a36c44&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/89e03893ce9e2f5bd17e280e614ae4c3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182357Z&X-Amz-Expires=3600&X-Amz-Signature=ff14d97685be921188f138d6dd6105f1d431f74e4472e74ee912c15148f6572e&X-Amz-SignedHeaders=host',
@@ -483,25 +439,21 @@
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host'
         ];
         
-        const sampleMessages = [
-            'Spotted this beauty in the garden today! 🌿',
-            'Who knew cats could be this cute?',
-            'Oscar visited for hours this afternoon',
-            'The grey spots are absolutely perfect',
-            'Best day ever seeing this little furball',
-            'Coming back tomorrow hopefully! 🤞',
-            'Most adorable visitor we could ask for',
-            'This cat has stolen our hearts 💙'
-        ];
+        let posts = JSON.parse(localStorage.getItem('oscarPosts')) || [];
+        let currentMediaFiles = [];
+        let currentComposeAvatar = felineEmojis[0];
         
         function formatTime(date) {
             const now = new Date();
             const diff = now - date;
-            const hours = Math.floor(diff / 3600000);
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
             const days = Math.floor(hours / 24);
             
-            if (days > 0) return days + 'd';
-            if (hours > 0) return hours + 'h';
+            if (days > 0) return days + 'd ago';
+            if (hours > 0) return hours + 'h ago';
+            if (minutes > 0) return minutes + 'm ago';
             return 'now';
         }
         
@@ -509,148 +461,209 @@
             return felineEmojis[Math.floor(Math.random() * felineEmojis.length)];
         }
         
-        function renderSidebar() {
-            const sidebar = document.getElementById('sidebarItems');
-            sidebar.innerHTML = '';
+        function changeAvatar() {
+            currentComposeAvatar = getRandomEmoji();
+            document.getElementById('composeAvatar').textContent = currentComposeAvatar;
+        }
+        
+        function addEmoji() {
+            const emojis = ['😊', '😂', '😍', '🎉', '🔥', '👍', '❤️', '😎', '🤔', '😢'];
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            const textArea = document.getElementById('composeText');
+            textArea.value += emoji;
+            textArea.focus();
+        }
+        
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    currentMediaFiles.push({
+                        type: 'image',
+                        data: e.target.result
+                    });
+                    renderMediaPreview();
+                };
+                reader.readAsDataURL(file);
+            }
+            event.target.value = '';
+        }
+        
+        function handleVideoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    currentMediaFiles.push({
+                        type: 'video',
+                        data: e.target.result
+                    });
+                    renderMediaPreview();
+                };
+                reader.readAsDataURL(file);
+            }
+            event.target.value = '';
+        }
+        
+        function renderMediaPreview() {
+            const preview = document.getElementById('mediaPreview');
+            preview.innerHTML = currentMediaFiles.map((media, idx) => `
+                <div class="media-preview-item">
+                    ${media.type === 'image' 
+                        ? `<img src="${media.data}" class="media-preview-img">` 
+                        : `<video src="${media.data}" class="media-preview-video" controls></video>`
+                    }
+                    <button class="media-preview-remove" onclick="removeMedia(${idx})">✕</button>
+                </div>
+            `).join('');
+        }
+        
+        function removeMedia(idx) {
+            currentMediaFiles.splice(idx, 1);
+            renderMediaPreview();
+        }
+        
+        function publishPost() {
+            const text = document.getElementById('composeText').value.trim();
             
-            Object.entries(cats).forEach(([id, cat]) => {
-                const div = document.createElement('div');
-                div.className = 'sidebar-item' + (id === currentCat ? ' active' : '');
-                div.onclick = () => selectCat(id);
-                div.innerHTML = `
-                    <div class="sidebar-item-avatar">${cat.emoji}</div>
-                    <span class="sidebar-item-name">${cat.name}</span>
-                `;
-                sidebar.appendChild(div);
-            });
-        }
-        
-        function selectCat(catId) {
-            currentCat = catId;
-            window.history.replaceState({}, '', `?cat=${catId}`);
-            renderSidebar();
+            if (!text && currentMediaFiles.length === 0) {
+                alert('Add some content to post!');
+                return;
+            }
+            
+            const post = {
+                id: Date.now(),
+                avatar: currentComposeAvatar,
+                author: 'Spotter',
+                text: text,
+                media: [...currentMediaFiles],
+                timestamp: new Date().toISOString(),
+                views: Math.floor(Math.random() * 100) + 20,
+                comments: Math.floor(Math.random() * 15),
+                likes: Math.floor(Math.random() * 50) + 5
+            };
+            
+            posts.unshift(post);
+            localStorage.setItem('oscarPosts', JSON.stringify(posts));
+            
+            document.getElementById('composeText').value = '';
+            currentMediaFiles = [];
+            document.getElementById('mediaPreview').innerHTML = '';
+            changeAvatar();
+            
             renderFeed();
-            updateHeader();
-        }
-        
-        function updateHeader() {
-            document.getElementById('feedTitle').textContent = cats[currentCat].name;
-            document.getElementById('feedSubtitle').textContent = `${allPosts[currentCat].length} sightings`;
         }
         
         function renderFeed() {
-            const postsArea = document.getElementById('postsArea');
-            const posts = allPosts[currentCat] || [];
+            const feed = document.getElementById('feed');
             
             if (posts.length === 0) {
-                postsArea.innerHTML = `
+                feed.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">👀</div>
-                        <div class="empty-state-text">No sightings yet</div>
-                        <div style="font-size: 12px; opacity: 0.6; margin-top: 4px;">Be the first to share!</div>
+                        <div class="empty-state-icon">📝</div>
+                        <div class="empty-state-title">No posts yet</div>
+                        <div class="empty-state-text">Be the first to share your Oscar sighting!</div>
                     </div>
                 `;
                 return;
             }
             
-            postsArea.innerHTML = posts.map((post, idx) => `
+            feed.innerHTML = posts.map(post => `
                 <div class="post">
-                    <div class="post-avatar">${post.avatar}</div>
-                    <div class="post-content">
-                        <div class="post-header">
-                            <div class="post-author">Spotter</div>
-                            <div class="post-time">${formatTime(new Date(post.timestamp))}</div>
+                    <div class="post-header">
+                        <div class="post-avatar">${post.avatar}</div>
+                        <div class="post-info">
+                            <div class="post-author-line">
+                                <span class="post-author">${post.author}</span>
+                                <span class="post-time">${formatTime(new Date(post.timestamp))}</span>
+                            </div>
                         </div>
-                        <div class="post-text">${post.text}</div>
-                        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
+                    </div>
+                    <div class="post-content">
+                        ${post.text ? `<div class="post-text">${post.text}</div>` : ''}
+                        ${post.media.map(media => 
+                            media.type === 'image' 
+                                ? `<div class="post-media"><img src="${media.data}" class="post-image"></div>`
+                                : `<div class="post-media"><video src="${media.data}" class="post-video" controls></video></div>`
+                        ).join('')}
                         <div class="post-actions">
-                            <button class="action-btn">👁️ ${Math.floor(Math.random() * 100) + 10}</button>
-                            <button class="action-btn">💬 ${Math.floor(Math.random() * 20)}</button>
-                            <button class="action-btn">❤️ ${Math.floor(Math.random() * 50) + 5}</button>
+                            <button class="action-btn">👁️ ${post.views}</button>
+                            <button class="action-btn">💬 ${post.comments}</button>
+                            <button class="action-btn">❤️ ${post.likes}</button>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
         
-        function addInitialPosts() {
-            if (allPosts[currentCat].length === 0) {
-                const initialPosts = [
+        function initializeWithDemoContent() {
+            if (posts.length === 0) {
+                posts = [
                     {
+                        id: Date.now() + 5,
                         avatar: getRandomEmoji(),
-                        text: 'Just saw this beautiful white and grey cat lounging in the garden!',
-                        image: catImages[0],
-                        timestamp: new Date(Date.now() - 2 * 3600000).toISOString()
-                    },
-                    {
-                        avatar: getRandomEmoji(),
-                        text: 'Oscar visited for hours today, playing on the porch! 🎾',
-                        image: catImages[1],
-                        timestamp: new Date(Date.now() - 4 * 3600000).toISOString()
-                    },
-                    {
-                        avatar: getRandomEmoji(),
-                        text: 'The most adorable little furball. Grey spots are perfection.',
-                        image: catImages[2],
-                        timestamp: new Date(Date.now() - 6 * 3600000).toISOString()
-                    },
-                    {
-                        avatar: getRandomEmoji(),
-                        text: 'Caught this little guy gazing out the window at birds 🐦',
-                        image: catImages[3],
-                        timestamp: new Date(Date.now() - 8 * 3600000).toISOString()
-                    },
-                    {
-                        avatar: getRandomEmoji(),
+                        author: 'Spotter',
                         text: 'Pure joy watching Oscar run and jump around! So much energy! 💫',
-                        image: catImages[4],
-                        timestamp: new Date(Date.now() - 10 * 3600000).toISOString()
+                        media: [{type: 'image', data: catImages[4]}],
+                        timestamp: new Date(Date.now() - 10 * 3600000).toISOString(),
+                        views: 84,
+                        comments: 12,
+                        likes: 43
+                    },
+                    {
+                        id: Date.now() + 4,
+                        avatar: getRandomEmoji(),
+                        author: 'Spotter',
+                        text: 'Caught this little guy gazing out the window at birds 🐦',
+                        media: [{type: 'image', data: catImages[3]}],
+                        timestamp: new Date(Date.now() - 8 * 3600000).toISOString(),
+                        views: 67,
+                        comments: 8,
+                        likes: 31
+                    },
+                    {
+                        id: Date.now() + 3,
+                        avatar: getRandomEmoji(),
+                        author: 'Spotter',
+                        text: 'The most adorable little furball. Grey spots are absolutely perfect. 🥰',
+                        media: [{type: 'image', data: catImages[2]}],
+                        timestamp: new Date(Date.now() - 6 * 3600000).toISOString(),
+                        views: 92,
+                        comments: 15,
+                        likes: 58
+                    },
+                    {
+                        id: Date.now() + 2,
+                        avatar: getRandomEmoji(),
+                        author: 'Spotter',
+                        text: 'Oscar visited for hours today, playing on the porch! 🎾 What an amazing afternoon!',
+                        media: [{type: 'image', data: catImages[1]}],
+                        timestamp: new Date(Date.now() - 4 * 3600000).toISOString(),
+                        views: 128,
+                        comments: 22,
+                        likes: 76
+                    },
+                    {
+                        id: Date.now() + 1,
+                        avatar: getRandomEmoji(),
+                        author: 'Spotter',
+                        text: 'Just spotted this beautiful white and grey cat lounging in the garden this morning! 🐱',
+                        media: [{type: 'image', data: catImages[0]}],
+                        timestamp: new Date(Date.now() - 2 * 3600000).toISOString(),
+                        views: 156,
+                        comments: 28,
+                        likes: 94
                     }
                 ];
-                
-                allPosts[currentCat] = initialPosts;
-                localStorage.setItem('allPosts', JSON.stringify(allPosts));
-            }
-        }
-        
-        function openQRModal() {
-            document.getElementById('qrModal').classList.add('active');
-            generateQR();
-        }
-        
-        function closeQRModal() {
-            document.getElementById('qrModal').classList.remove('active');
-        }
-        
-        function generateQR() {
-            const qrContainer = document.getElementById('qrCode');
-            qrContainer.innerHTML = '';
-            const qrUrl = `${window.location.origin}${window.location.pathname}?cat=${currentCat}`;
-            new QRCode(qrContainer, {
-                text: qrUrl,
-                width: 250,
-                height: 250,
-                colorDark: '#0f0f0f',
-                colorLight: '#ffffff'
-            });
-        }
-        
-        function downloadQR() {
-            const canvas = document.querySelector('#qrCode canvas');
-            if (canvas) {
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/png');
-                link.download = `${cats[currentCat].name}_QR.png`;
-                link.click();
+                localStorage.setItem('oscarPosts', JSON.stringify(posts));
             }
         }
         
         // Initialize
         window.addEventListener('load', () => {
-            addInitialPosts();
-            renderSidebar();
+            initializeWithDemoContent();
             renderFeed();
-            updateHeader();
         });
     </script>
 </body>
