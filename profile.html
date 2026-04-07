@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar's Profile - Mystery Cat Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #fafafa;
+            color: #000;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .header-avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+        }
+        
+        .header-avatar svg {
+            width: 80px;
+            height: 80px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .profile-section {
+            padding: 24px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .profile-section h3 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #65676b;
+            margin-bottom: 12px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+            justify-content: space-around;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #65676b;
+            margin-top: 4px;
+        }
+        
+        .about-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #000;
+            margin-bottom: 16px;
+        }
+        
+        .add-button {
+            display: block;
+            width: 100%;
+            background: #0a66c2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .add-button:hover {
+            background-color: #084a94;
+        }
+        
+        .add-button.added {
+            background: #e4e6eb;
+            color: #0a66c2;
+        }
+        
+        .feed-section {
+            padding: 24px;
+        }
+        
+        .feed-section h3 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #65676b;
+            margin-bottom: 16px;
+        }
+        
+        .cat-post {
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #f5f5f5;
+        }
+        
+        .cat-post-header {
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .cat-post-text {
+            font-size: 13px;
+            color: #65676b;
+            line-height: 1.5;
+        }
+        
+        .cat-post-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 12px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.2s;
+            z-index: 1000;
+        }
+        
+        .back-button:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button" onclick="history.back()">←</div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="header-avatar" id="headerAvatar"></div>
+            <h1 id="catName">Oscar</h1>
+            <p id="catSubtitle">The Mystery Cat</p>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Stats</h3>
+            <div class="profile-stats">
+                <div class="stat">
+                    <div class="stat-number" id="sightingCount">0</div>
+                    <div class="stat-label">Sightings</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="followerCount">0</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="postCount">0</div>
+                    <div class="stat-label">Posts</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3>About This Cat</h3>
+            <p class="about-text" id="catBio">A mysterious visitor with excellent taste in locations. Comes and goes as they please, spreading joy and mystery.</p>
+            <button class="add-button" id="addBtn" onclick="addCatToList()">+ Add to My Cats</button>
+        </div>
+        
+        <div class="feed-section" id="catFeedSection" style="display:none;">
+            <h3>Recent Activity</h3>
+            <div id="catFeed"></div>
+        </div>
+    </div>
+    
+    <script>
+        const svgAvatars = {
+            'lion': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#FDB95D" stroke="#F0A020" stroke-width="2"/><circle cx="60" cy="70" r="35" fill="#E89B3C"/><circle cx="140" cy="70" r="35" fill="#E89B3C"/><circle cx="50" cy="100" r="40" fill="#E89B3C"/><circle cx="150" cy="100" r="40" fill="#E89B3C"/><circle cx="70" cy="130" r="35" fill="#E89B3C"/><circle cx="130" cy="130" r="35" fill="#E89B3C"/><circle cx="100" cy="100" r="45" fill="#FDB95D"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#fff"/><circle cx="116" cy="89" r="2" fill="#fff"/><ellipse cx="100" cy="105" rx="8" ry="10" fill="#D4A574"/><path d="M 100 105 Q 90 115 80 110" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 110 115 120 110" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+            'tiger': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#FF9E1B" stroke="#E67E0F" stroke-width="2"/><circle cx="100" cy="100" r="50" fill="#FF9E1B"/><path d="M 70 80 Q 75 75 80 85" stroke="#333" stroke-width="3" fill="none"/><path d="M 120 80 Q 125 75 130 85" stroke="#333" stroke-width="3" fill="none"/><path d="M 75 100 Q 80 105 70 110" stroke="#333" stroke-width="3" fill="none"/><path d="M 125 100 Q 120 105 130 110" stroke="#333" stroke-width="3" fill="none"/><circle cx="85" cy="90" r="7" fill="#000"/><circle cx="115" cy="90" r="7" fill="#000"/><circle cx="86" cy="89" r="2.5" fill="#FFD700"/><circle cx="116" cy="89" r="2.5" fill="#FFD700"/><polygon points="70,60 65,40 75,55" fill="#FF9E1B"/><polygon points="130,60 135,40 125,55" fill="#FF9E1B"/><ellipse cx="100" cy="105" rx="7" ry="9" fill="#FF6B6B"/><path d="M 100 105 L 95 115 M 100 105 L 105 115" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>',
+            'leopard': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#D4A574" stroke="#B8860B" stroke-width="2"/><circle cx="70" cy="70" r="8" fill="#6B4423"/><circle cx="130" cy="70" r="8" fill="#6B4423"/><circle cx="60" cy="100" r="10" fill="#6B4423"/><circle cx="140" cy="100" r="10" fill="#6B4423"/><circle cx="75" cy="125" r="9" fill="#6B4423"/><circle cx="125" cy="125" r="9" fill="#6B4423"/><circle cx="100" cy="75" r="7" fill="#6B4423"/><circle cx="85" cy="90" r="7" fill="#000"/><circle cx="115" cy="90" r="7" fill="#000"/><circle cx="87" cy="88" r="2.5" fill="#FFD700"/><circle cx="117" cy="88" r="2.5" fill="#FFD700"/><ellipse cx="100" cy="105" rx="6" ry="8" fill="#6B4423"/><path d="M 100 105 Q 92 112 85 110" stroke="#000" stroke-width="2" fill="none"/><path d="M 100 105 Q 108 112 115 110" stroke="#000" stroke-width="2" fill="none"/></svg>',
+            'cheetah': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#F4D03F" stroke="#E8A60F" stroke-width="2"/><path d="M 85 95 L 75 110" stroke="#333" stroke-width="2"/><path d="M 115 95 L 125 110" stroke="#333" stroke-width="2"/><circle cx="70" cy="75" r="5" fill="#333"/><circle cx="130" cy="75" r="5" fill="#333"/><circle cx="65" cy="105" r="4" fill="#333"/><circle cx="135" cy="105" r="4" fill="#333"/><circle cx="80" cy="130" r="5" fill="#333"/><circle cx="120" cy="130" r="5" fill="#333"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#fff"/><circle cx="116" cy="89" r="2" fill="#fff"/><ellipse cx="100" cy="105" rx="6" ry="8" fill="#333"/><path d="M 100 115 L 95 125 L 100 123 L 105 125 Z" fill="#F4D03F"/></svg>',
+            'puma': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#8B7355" stroke="#6B5344" stroke-width="2"/><circle cx="100" cy="100" r="48" fill="#8B7355"/><polygon points="70,50 65,30 75,45" fill="#8B7355"/><polygon points="130,50 135,30 125,45" fill="#8B7355"/><polygon points="70,50 68,38 75,48" fill="#F4A460"/><polygon points="130,50 132,38 125,48" fill="#F4A460"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#90EE90"/><circle cx="116" cy="89" r="2" fill="#90EE90"/><ellipse cx="100" cy="105" rx="7" ry="8" fill="#654321"/><path d="M 100 105 Q 92 115 82 112" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 108 115 118 112" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="50" y1="95" x2="70" y2="93" stroke="#000" stroke-width="1.5"/><line x1="50" y1="105" x2="70" y2="107" stroke="#000" stroke-width="1.5"/><line x1="150" y1="95" x2="130" y2="93" stroke="#000" stroke-width="1.5"/><line x1="150" y1="105" x2="130" y2="107" stroke="#000" stroke-width="1.5"/></svg>',
+            'ocelot': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#C9A961" stroke="#B8942F" stroke-width="2"/><ellipse cx="70" cy="70" rx="12" ry="15" fill="#6B4423" opacity="0.8"/><ellipse cx="130" cy="70" rx="12" ry="15" fill="#6B4423" opacity="0.8"/><ellipse cx="60" cy="100" rx="10" ry="14" fill="#6B4423" opacity="0.7"/><ellipse cx="140" cy="100" rx="10" ry="14" fill="#6B4423" opacity="0.7"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="88" r="2.5" fill="#00FF00"/><circle cx="116" cy="88" r="2.5" fill="#00FF00"/><ellipse cx="100" cy="105" rx="6" ry="7" fill="#FF69B4"/><path d="M 100 105 Q 92 113 84 110" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 108 113 116 110" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'
+        };
+        
+        const felines = ['lion', 'tiger', 'leopard', 'cheetah', 'puma', 'ocelot'];
+        const catNames = ['Oscar', 'Shadow', 'Whiskers', 'Patches', 'Smokey', 'Bandit'];
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const catId = urlParams.get('id') || 'oscar-main';
+        
+        let catData = {
+            id: catId,
+            name: catNames[Math.floor(catId.charCodeAt(0) % catNames.length)],
+            feline: felines[Math.floor(catId.charCodeAt(0) % felines.length)]
+        };
+        
+        const posts = JSON.parse(localStorage.getItem('oscarPosts')) || [];
+        let myCats = JSON.parse(localStorage.getItem('myCats')) || [];
+        
+        function renderProfile() {
+            document.getElementById('headerAvatar').innerHTML = svgAvatars[catData.feline];
+            document.getElementById('catName').textContent = catData.name;
+            document.getElementById('catSubtitle').textContent = 'The Mystery Cat';
+            document.getElementById('sightingCount').textContent = posts.length;
+            document.getElementById('postCount').textContent = posts.length;
+            document.getElementById('followerCount').textContent = myCats.length;
+            
+            const isCatAdded = myCats.some(cat => cat.id === catData.id);
+            const addBtn = document.getElementById('addBtn');
+            if (isCatAdded) {
+                addBtn.textContent = '✓ Added to My Cats';
+                addBtn.classList.add('added');
+                addBtn.disabled = true;
+            }
+            
+            if (posts.length > 0) {
+                document.getElementById('catFeedSection').style.display = 'block';
+                const catFeed = document.getElementById('catFeed');
+                catFeed.innerHTML = posts.slice(0, 5).map(post => `
+                    <div class="cat-post">
+                        <div class="cat-post-header">Recent sighting</div>
+                        <div class="cat-post-text">${post.text}</div>
+                        ${post.image ? `<img src="${post.image}" class="cat-post-image" alt="Sighting">` : ''}
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function addCatToList() {
+            const isCatAdded = myCats.some(cat => cat.id === catData.id);
+            if (!isCatAdded) {
+                myCats.push({
+                    id: catData.id,
+                    name: catData.name,
+                    feline: catData.feline,
+                    addedDate: new Date().toISOString()
+                });
+                localStorage.setItem('myCats', JSON.stringify(myCats));
+                renderProfile();
+            }
+        }
+        
+        window.addEventListener('load', renderProfile);
+    </script>
+</body>
+</html>
