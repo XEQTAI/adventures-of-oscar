@@ -8,109 +8,105 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #000; }
-        header { padding: 32px 0; border-bottom: 1px solid #e0e0e0; position: sticky; top: 0; }
-        .header-content { max-width: 960px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 28px; }
-        .brand { display: flex; flex-direction: column; gap: 4px; }
+        .container { max-width: 960px; margin: 0 auto; padding: 24px; }
+        header { padding: 24px 0; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; }
+        .logo { font-size: 24px; margin-right: 16px; }
+        .brand { flex: 1; }
         .brand-name { font-size: 20px; font-weight: 700; }
         .brand-tagline { font-size: 12px; color: #666; }
-        .btn { padding: 10px 20px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
-        .btn-primary { background: #000; color: #fff; }
-        .btn-primary:hover { background: #1a1a1a; }
-        main { flex: 1; max-width: 960px; width: 100%; margin: 0 auto; padding: 48px 24px; }
-        h1 { font-size: 48px; font-weight: 700; margin: 0 0 24px 0; text-align: center; }
-        .intro { color: #666; text-align: center; margin-bottom: 64px; font-size: 18px; }
-        .compose { background: #f5f5f5; border-radius: 12px; padding: 24px; margin-bottom: 48px; border: 1px solid #e0e0e0; }
-        .compose-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+        h1 { font-size: 48px; margin: 48px 0 24px 0; text-align: center; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 48px; font-size: 18px; }
+        .compose { background: #f5f5f5; padding: 24px; border-radius: 12px; margin-bottom: 48px; }
+        .compose-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
         .avatar { font-size: 32px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
-        .label { font-size: 14px; font-weight: 600; color: #666; }
-        textarea { width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 15px; font-family: inherit; min-height: 80px; margin-bottom: 16px; }
+        .label { font-weight: 600; color: #666; }
+        textarea { width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 15px; min-height: 80px; margin-bottom: 16px; }
         textarea:focus { outline: none; border-color: #000; }
-        .actions { display: flex; justify-content: space-between; gap: 12px; }
+        .controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
         .tools { display: flex; gap: 8px; }
-        .tool-btn { background: #fff; border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; }
-        .tool-btn:hover { background: #1a1a1a; color: #fff; }
+        button { padding: 8px 16px; border: 1px solid #e0e0e0; background: #fff; border-radius: 6px; cursor: pointer; font-size: 16px; font-family: inherit; }
+        button:hover { background: #f5f5f5; }
+        .post-btn { background: #000; color: #fff; border: none; padding: 10px 24px; font-weight: 600; }
+        .post-btn:hover { background: #333; }
         .posts { display: flex; flex-direction: column; gap: 48px; }
         .post { border-bottom: 1px solid #e0e0e0; padding-bottom: 48px; }
         .post:last-child { border-bottom: none; }
-        .post-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
-        .post-avatar { font-size: 32px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 50%; }
-        .post-meta { display: flex; flex-direction: column; gap: 2px; }
-        .post-author { font-size: 14px; font-weight: 600; }
+        .post-header { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+        .post-avatar { font-size: 32px; width: 48px; height: 48px; background: #f5f5f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .post-meta { display: flex; flex-direction: column; gap: 4px; }
+        .post-author { font-weight: 600; font-size: 14px; }
         .post-time { font-size: 12px; color: #666; }
-        .post-content { margin-left: 60px; }
-        .post-text { font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
-        .post-image { width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
-        .post-stats { display: flex; gap: 32px; padding-top: 16px; border-top: 1px solid #e0e0e0; margin-top: 20px; color: #666; font-size: 13px; }
-        footer { border-top: 1px solid #e0e0e0; padding: 48px 24px; text-align: center; color: #666; font-size: 13px; }
+        .post-text { font-size: 16px; line-height: 1.6; margin-bottom: 16px; }
+        .post-image { width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 16px; border: 1px solid #e0e0e0; }
+        .post-actions { display: flex; gap: 32px; padding-top: 16px; border-top: 1px solid #e0e0e0; font-size: 13px; color: #666; }
+        .action { cursor: pointer; }
+        .action:hover { color: #000; }
+        footer { border-top: 1px solid #e0e0e0; padding: 48px 0; text-align: center; font-size: 13px; color: #666; margin-top: 48px; }
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center; }
-        .modal.show { display: flex; }
-        .modal-content { background: #fff; border: 1px solid #e0e0e0; border-radius: 16px; padding: 40px; max-width: 500px; width: 90%; text-align: center; }
-        .modal-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+        .modal.active { display: flex; }
+        .modal-content { background: #fff; padding: 40px; border-radius: 16px; max-width: 500px; text-align: center; }
+        .modal-title { font-size: 28px; font-weight: 700; margin-bottom: 16px; }
         #qrCode { margin: 32px 0; }
-        #qrCode canvas { display: block; margin: 0 auto; }
         .modal-buttons { display: flex; gap: 12px; margin-top: 32px; }
-        .modal-buttons button { flex: 1; padding: 12px 24px; }
+        .modal-buttons button { flex: 1; }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div style="display: flex; gap: 16px; align-items: center;">
+    <div class="container">
+        <header>
+            <div style="display: flex; align-items: center;">
                 <div class="logo">🐱</div>
                 <div class="brand">
                     <div class="brand-name">The Adventures of Oscar</div>
                     <div class="brand-tagline">Community Feed</div>
                 </div>
             </div>
-            <button class="btn btn-primary" onclick="showQR()">🔗 Share QR</button>
-        </div>
-    </header>
-    
-    <main>
+            <button class="post-btn" onclick="openQR()">🔗 Share QR</button>
+        </header>
+
         <h1>The Adventures of Oscar</h1>
-        <p class="intro">Share sightings of your favorite visitor. Posts are permanent and visible to everyone.</p>
-        
+        <p class="subtitle">Share sightings of your favorite visitor. Posts are permanent.</p>
+
         <div class="compose">
             <div class="compose-header">
                 <div class="avatar" id="myAvatar">🐱</div>
                 <div class="label" id="myLabel">You</div>
             </div>
-            <textarea id="text" placeholder="What's on your mind? Share your sighting..."></textarea>
-            <div class="actions">
+            <textarea id="textInput" placeholder="What's on your mind? Share your sighting..."></textarea>
+            <div class="controls">
                 <div class="tools">
-                    <button class="tool-btn" onclick="addEmoji()">😊</button>
-                    <button class="tool-btn" onclick="addImage()">📷</button>
-                    <button class="tool-btn" onclick="addVideo()">🎥</button>
+                    <button onclick="addEmoji()">😊</button>
+                    <button onclick="addImg()">📷</button>
+                    <button onclick="addVid()">🎥</button>
                 </div>
-                <button class="btn btn-primary" onclick="post()">Post</button>
+                <button class="post-btn" onclick="postMessage()">Post</button>
             </div>
         </div>
-        
-        <div class="posts" id="posts"></div>
-    </main>
-    
+
+        <div class="posts" id="feed"></div>
+    </div>
+
     <footer>
         <p>All posts are permanent and cannot be deleted. Only add to the story.</p>
-        <p>© Community 2026</p>
+        <p style="margin-top: 8px;">© Community 2026</p>
     </footer>
-    
-    <div class="modal" id="qrmodal">
+
+    <div class="modal" id="qrModal">
         <div class="modal-content">
             <div class="modal-title">🔗 QR Code</div>
-            <p style="font-size: 14px; color: #666; margin-bottom: 32px;">Scan to share</p>
+            <p style="font-size: 14px; color: #666; margin-bottom: 24px;">Scan or download to share</p>
             <div id="qrCode"></div>
             <div class="modal-buttons">
-                <button class="btn btn-primary" onclick="downloadQR()">Download</button>
-                <button class="btn btn-primary" style="background: #f5f5f5; color: #000; border: 1px solid #e0e0e0;" onclick="hideQR()">Close</button>
+                <button class="post-btn" onclick="downloadQR()">Download</button>
+                <button onclick="closeQR()">Close</button>
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        const emojis = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🐈'];
-        const randomEmojis = ['😊', '😍', '🎉', '🔥', '💯', '🙌', '👏'];
+        const emojis = ['😊', '😍', '🎉', '🔥', '💯', '🙌', '👏', '✨', '🌟', '💫'];
+        const felines = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🐈'];
         const images = [
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/0d0c8c9e9d0ba9c1b809adb0b9d3b3a5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182406Z&X-Amz-Expires=3600&X-Amz-Signature=4a1942bafe71c18497fe6bec5a098ff25de039cf2bd12c8c27fea37fc1a36c44&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/89e03893ce9e2f5bd17e280e614ae4c3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182357Z&X-Amz-Expires=3600&X-Amz-Signature=ff14d97685be921188f138d6dd6105f1d431f74e4472e74ee912c15148f6572e&X-Amz-SignedHeaders=host',
@@ -118,93 +114,84 @@
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cfe46af1334a74738cc580c774ee6558?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182358Z&X-Amz-Expires=3600&X-Amz-Signature=f460217ebf48d3c2b75f5c5ce27b47c87fd1cde1bed9f662c0e76216497aa4f2&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host'
         ];
-        
-        let avatar = emojis[Math.floor(Math.random() * emojis.length)];
-        let allPosts = [];
-        
-        function init() {
-            document.getElementById('myAvatar').textContent = avatar;
-            document.getElementById('myLabel').textContent = 'You (' + avatar + ')';
-            
-            let saved = localStorage.getItem('posts');
-            if (saved) {
-                allPosts = JSON.parse(saved);
-            } else {
-                allPosts = [
-                    { avatar: '🦁', text: 'Just saw this beautiful white and grey cat lounging in the garden! 🌿', img: images[0], time: '2h', views: 42, comments: 8, likes: 23 },
-                    { avatar: '🐯', text: 'Oscar visited for hours today, playing on the porch! 🎾', img: images[1], time: '4h', views: 56, comments: 12, likes: 31 },
-                    { avatar: '🐆', text: 'The most adorable furball. Those grey spots are perfection. 💙', img: images[2], time: '6h', views: 34, comments: 5, likes: 18 },
-                    { avatar: '🐱', text: 'Caught this guy gazing at birds! 🐦 Such focus!', img: images[3], time: '8h', views: 29, comments: 3, likes: 15 },
-                    { avatar: '🦅', text: 'Oscar running and jumping! So much energy! 💫', img: images[4], time: '10h', views: 18, comments: 2, likes: 9 }
-                ];
-                localStorage.setItem('posts', JSON.stringify(allPosts));
-            }
-            
-            render();
-        }
+
+        let avatar = felines[Math.floor(Math.random() * felines.length)];
+        let posts = JSON.parse(localStorage.getItem('posts')) || [
+            {a: '🦁', t: 'Just saw this beautiful white and grey cat lounging in the garden! So peaceful. 🌿', i: images[0], h: '2h', v: 42, c: 8, l: 23},
+            {a: '🐯', t: 'Oscar visited for hours, playing on the porch! 🎾 Most playful visitor we could ask for.', i: images[1], h: '4h', v: 56, c: 12, l: 31},
+            {a: '🐆', t: 'The most adorable little furball. Those grey spots are absolutely perfection. 💙', i: images[2], h: '6h', v: 34, c: 5, l: 18},
+            {a: '🐱', t: 'Caught this little guy gazing out the window at birds 🐦 Such focus!', i: images[3], h: '8h', v: 29, c: 3, l: 15},
+            {a: '🦅', t: 'Pure joy watching Oscar run and jump! So much energy! 💫 Best day ever.', i: images[4], h: '10h', v: 18, c: 2, l: 9}
+        ];
+
+        document.getElementById('myAvatar').textContent = avatar;
+        document.getElementById('myLabel').textContent = 'You (' + avatar + ')';
         
         function render() {
             let html = '';
-            for (let p of allPosts) {
-                html += '<div class="post"><div class="post-header"><div class="post-avatar">' + p.avatar + '</div><div class="post-meta"><div class="post-author">Spotter ' + p.avatar + '</div><div class="post-time">' + p.time + ' ago</div></div></div><div class="post-content"><div class="post-text">' + p.text + '</div>';
-                if (p.img) html += '<img src="' + p.img + '" class="post-image">';
-                html += '<div class="post-stats">👁️ ' + p.views + ' 💬 ' + p.comments + ' ❤️ ' + p.likes + '</div></div></div>';
+            for (let p of posts) {
+                html += `<div class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">${p.a}</div>
+                        <div class="post-meta">
+                            <div class="post-author">Spotter ${p.a}</div>
+                            <div class="post-time">${p.h} ago</div>
+                        </div>
+                    </div>
+                    <div class="post-text">${p.t}</div>
+                    <img src="${p.i}" class="post-image" alt="Post">
+                    <div class="post-actions">
+                        <div class="action">👁️ ${p.v}</div>
+                        <div class="action">💬 ${p.c}</div>
+                        <div class="action">❤️ ${p.l}</div>
+                    </div>
+                </div>`;
             }
-            document.getElementById('posts').innerHTML = html;
+            document.getElementById('feed').innerHTML = html;
         }
-        
-        function post() {
-            let text = document.getElementById('text').value.trim();
+        render();
+
+        function postMessage() {
+            const text = document.getElementById('textInput').value.trim();
             if (!text) { alert('Please write something!'); return; }
-            allPosts.unshift({ avatar: avatar, text: text, img: null, time: 'now', views: 0, comments: 0, likes: 0 });
-            localStorage.setItem('posts', JSON.stringify(allPosts));
-            document.getElementById('text').value = '';
+            posts.unshift({a: avatar, t: text, i: null, h: 'now', v: 0, c: 0, l: 0});
+            localStorage.setItem('posts', JSON.stringify(posts));
+            document.getElementById('textInput').value = '';
             render();
         }
-        
         function addEmoji() {
-            document.getElementById('text').value += ' ' + randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
+            document.getElementById('textInput').value += ' ' + emojis[Math.floor(Math.random() * emojis.length)];
+            document.getElementById('textInput').focus();
         }
-        
-        function addImage() {
-            document.getElementById('text').value += ' [📷 Image]';
+        function addImg() {
+            document.getElementById('textInput').value += ' [📷 Image]';
+            document.getElementById('textInput').focus();
         }
-        
-        function addVideo() {
-            document.getElementById('text').value += ' [🎥 Video]';
+        function addVid() {
+            document.getElementById('textInput').value += ' [🎥 Video]';
+            document.getElementById('textInput').focus();
         }
-        
-        function showQR() {
-            document.getElementById('qrmodal').classList.add('show');
-            setTimeout(function() {
+        function openQR() {
+            document.getElementById('qrModal').classList.add('active');
+            setTimeout(() => {
                 document.getElementById('qrCode').innerHTML = '';
-                new QRCode(document.getElementById('qrCode'), {
-                    text: window.location.href,
-                    width: 280,
-                    height: 280,
-                    colorDark: '#000',
-                    colorLight: '#fff'
-                });
+                new QRCode(document.getElementById('qrCode'), {text: window.location.href, width: 280, height: 280});
             }, 50);
         }
-        
-        function hideQR() {
-            document.getElementById('qrmodal').classList.remove('show');
+        function closeQR() {
+            document.getElementById('qrModal').classList.remove('active');
         }
-        
         function downloadQR() {
-            setTimeout(function() {
-                let canvas = document.querySelector('#qrCode canvas');
-                if (canvas) {
-                    let link = document.createElement('a');
-                    link.href = canvas.toDataURL('image/png');
-                    link.download = 'Oscar_QR.png';
-                    link.click();
-                }
-            }, 100);
+            const canvas = document.querySelector('#qrCode canvas');
+            if (!canvas) return;
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL();
+            link.download = 'Oscar_QR.png';
+            link.click();
         }
-        
-        init();
+        document.getElementById('textInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) postMessage();
+        });
     </script>
 </body>
 </html>
