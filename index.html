@@ -6,682 +6,205 @@
     <title>The Adventures of Oscar</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --black: #000000;
-            --dark-grey: #1a1a1a;
-            --grey: #666666;
-            --light-grey: #f5f5f5;
-            --white: #ffffff;
-            --border: #e0e0e0;
-        }
-        
-        html, body {
-            width: 100%;
-            height: 100%;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--white);
-            color: var(--black);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        .page-wrapper {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        header {
-            padding: 32px 0;
-            border-bottom: 1px solid var(--border);
-            background: var(--white);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-content {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .logo {
-            font-size: 28px;
-        }
-        
-        .brand {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        
-        .brand-name {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        
-        .brand-tagline {
-            font-size: 12px;
-            color: var(--grey);
-            font-weight: 400;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .btn-primary {
-            background: var(--black);
-            color: var(--white);
-        }
-        
-        .btn-primary:hover {
-            background: var(--dark-grey);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--black);
-            border: 1px solid var(--border);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--light-grey);
-        }
-        
-        main {
-            flex: 1;
-            max-width: 960px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 48px 24px;
-        }
-        
-        .feed-intro {
-            text-align: center;
-            margin-bottom: 64px;
-        }
-        
-        .feed-intro h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
-        
-        .feed-intro p {
-            font-size: 18px;
-            color: var(--grey);
-            font-weight: 400;
-        }
-        
-        .compose-box {
-            background: var(--light-grey);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 48px;
-            border: 1px solid var(--border);
-        }
-        
-        .compose-header {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-        
-        .compose-avatar {
-            font-size: 32px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .compose-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--grey);
-        }
-        
-        .compose-input {
-            width: 100%;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 14px 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            resize: vertical;
-            min-height: 80px;
-            margin-bottom: 16px;
-            transition: border-color 0.3s ease;
-        }
-        
-        .compose-input:focus {
-            outline: none;
-            border-color: var(--black);
-            box-shadow: inset 0 0 0 1px var(--black);
-        }
-        
-        .compose-input::placeholder {
-            color: var(--grey);
-        }
-        
-        .compose-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .compose-tools {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .compose-tool {
-            background: var(--white);
-            border: 1px solid var(--border);
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.2s ease;
-        }
-        
-        .compose-tool:hover {
-            background: var(--dark-grey);
-            color: var(--white);
-            border-color: var(--black);
-        }
-        
-        .compose-tool:active {
-            transform: scale(0.95);
-        }
-        
-        .posts-container {
-            display: flex;
-            flex-direction: column;
-            gap: 48px;
-        }
-        
-        .post {
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 48px;
-        }
-        
-        .post:last-child {
-            border-bottom: none;
-        }
-        
-        .post-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        
-        .post-avatar {
-            font-size: 32px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light-grey);
-            border-radius: 50%;
-        }
-        
-        .post-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        
-        .post-author {
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .post-time {
-            font-size: 12px;
-            color: var(--grey);
-        }
-        
-        .post-content {
-            margin-left: 60px;
-        }
-        
-        .post-text {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: var(--black);
-            word-break: break-word;
-        }
-        
-        .post-image {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            border-radius: 12px;
-            background: var(--light-grey);
-            object-fit: cover;
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-            display: block;
-        }
-        
-        .post-actions {
-            display: flex;
-            gap: 32px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-            margin-top: 20px;
-        }
-        
-        .action {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--grey);
-            font-size: 13px;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        
-        .action:hover {
-            color: var(--black);
-        }
-        
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 48px 24px;
-            background: var(--white);
-        }
-        
-        .footer-content {
-            max-width: 960px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 13px;
-            color: var(--grey);
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
-        
-        .modal-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        
-        #qrCode {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 32px 0;
-            display: inline-block;
-        }
-        
-        #qrCode canvas {
-            display: block;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 32px;
-        }
-        
-        .modal-btn {
-            flex: 1;
-            padding: 12px 24px;
-        }
-        
-        @media (max-width: 768px) {
-            .feed-intro h1 {
-                font-size: 32px;
-            }
-            
-            .post-content {
-                margin-left: 0;
-            }
-            
-            main {
-                padding: 24px;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #000; }
+        header { padding: 32px 0; border-bottom: 1px solid #e0e0e0; position: sticky; top: 0; }
+        .header-content { max-width: 960px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; }
+        .brand { display: flex; flex-direction: column; gap: 4px; }
+        .brand-name { font-size: 20px; font-weight: 700; }
+        .brand-tagline { font-size: 12px; color: #666; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+        .btn-primary { background: #000; color: #fff; }
+        .btn-primary:hover { background: #1a1a1a; }
+        main { flex: 1; max-width: 960px; width: 100%; margin: 0 auto; padding: 48px 24px; }
+        h1 { font-size: 48px; font-weight: 700; margin: 0 0 24px 0; text-align: center; }
+        .intro { color: #666; text-align: center; margin-bottom: 64px; font-size: 18px; }
+        .compose { background: #f5f5f5; border-radius: 12px; padding: 24px; margin-bottom: 48px; border: 1px solid #e0e0e0; }
+        .compose-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+        .avatar { font-size: 32px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .label { font-size: 14px; font-weight: 600; color: #666; }
+        textarea { width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 15px; font-family: inherit; min-height: 80px; margin-bottom: 16px; }
+        textarea:focus { outline: none; border-color: #000; }
+        .actions { display: flex; justify-content: space-between; gap: 12px; }
+        .tools { display: flex; gap: 8px; }
+        .tool-btn { background: #fff; border: 1px solid #e0e0e0; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        .tool-btn:hover { background: #1a1a1a; color: #fff; }
+        .posts { display: flex; flex-direction: column; gap: 48px; }
+        .post { border-bottom: 1px solid #e0e0e0; padding-bottom: 48px; }
+        .post:last-child { border-bottom: none; }
+        .post-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+        .post-avatar { font-size: 32px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 50%; }
+        .post-meta { display: flex; flex-direction: column; gap: 2px; }
+        .post-author { font-size: 14px; font-weight: 600; }
+        .post-time { font-size: 12px; color: #666; }
+        .post-content { margin-left: 60px; }
+        .post-text { font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
+        .post-image { width: 100%; max-width: 600px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
+        .post-stats { display: flex; gap: 32px; padding-top: 16px; border-top: 1px solid #e0e0e0; margin-top: 20px; color: #666; font-size: 13px; }
+        footer { border-top: 1px solid #e0e0e0; padding: 48px 24px; text-align: center; color: #666; font-size: 13px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-content { background: #fff; border: 1px solid #e0e0e0; border-radius: 16px; padding: 40px; max-width: 500px; width: 90%; text-align: center; }
+        .modal-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+        #qrCode { margin: 32px 0; }
+        #qrCode canvas { display: block; margin: 0 auto; }
+        .modal-buttons { display: flex; gap: 12px; margin-top: 32px; }
+        .modal-buttons button { flex: 1; padding: 12px 24px; }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <header>
-            <div class="header-content">
-                <div class="header-left">
-                    <div class="logo">🐱</div>
-                    <div class="brand">
-                        <div class="brand-name">The Adventures of Oscar</div>
-                        <div class="brand-tagline">Community Feed</div>
-                    </div>
-                </div>
-                <div class="header-right">
-                    <button class="btn btn-primary" onclick="openQRModal()">🔗 Share QR</button>
+    <header>
+        <div class="header-content">
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <div class="logo">🐱</div>
+                <div class="brand">
+                    <div class="brand-name">The Adventures of Oscar</div>
+                    <div class="brand-tagline">Community Feed</div>
                 </div>
             </div>
-        </header>
-        
-        <main>
-            <div class="feed-intro">
-                <h1>The Adventures of Oscar</h1>
-                <p>Share sightings of your favorite visitor. Posts are permanent and visible to everyone.</p>
-            </div>
-            
-            <div class="compose-box">
-                <div class="compose-header">
-                    <div class="compose-avatar" id="userAvatar">🐱</div>
-                    <div class="compose-label" id="userLabel">You</div>
-                </div>
-                <textarea 
-                    id="postText"
-                    class="compose-input" 
-                    placeholder="What's on your mind? Share your sighting..."
-                    maxlength="500"></textarea>
-                <div class="compose-actions">
-                    <div class="compose-tools">
-                        <button class="compose-tool" type="button" onclick="addEmoji()" title="Add emoji">😊</button>
-                        <button class="compose-tool" type="button" onclick="addImage()" title="Add image">📷</button>
-                        <button class="compose-tool" type="button" onclick="addVideo()" title="Add video">🎥</button>
-                    </div>
-                    <button class="btn btn-primary" onclick="createPost()">Post</button>
-                </div>
-            </div>
-            
-            <div class="posts-container" id="postsContainer"></div>
-        </main>
-        
-        <footer>
-            <div class="footer-content">
-                <p>All posts are permanent and cannot be deleted. Only add to the story.</p>
-                <p style="margin-top: 8px;">© Community 2026</p>
-            </div>
-        </footer>
-    </div>
+            <button class="btn btn-primary" onclick="showQR()">🔗 Share QR</button>
+        </div>
+    </header>
     
-    <div class="modal" id="qrModal">
+    <main>
+        <h1>The Adventures of Oscar</h1>
+        <p class="intro">Share sightings of your favorite visitor. Posts are permanent and visible to everyone.</p>
+        
+        <div class="compose">
+            <div class="compose-header">
+                <div class="avatar" id="myAvatar">🐱</div>
+                <div class="label" id="myLabel">You</div>
+            </div>
+            <textarea id="text" placeholder="What's on your mind? Share your sighting..."></textarea>
+            <div class="actions">
+                <div class="tools">
+                    <button class="tool-btn" onclick="addEmoji()">😊</button>
+                    <button class="tool-btn" onclick="addImage()">📷</button>
+                    <button class="tool-btn" onclick="addVideo()">🎥</button>
+                </div>
+                <button class="btn btn-primary" onclick="post()">Post</button>
+            </div>
+        </div>
+        
+        <div class="posts" id="posts"></div>
+    </main>
+    
+    <footer>
+        <p>All posts are permanent and cannot be deleted. Only add to the story.</p>
+        <p>© Community 2026</p>
+    </footer>
+    
+    <div class="modal" id="qrmodal">
         <div class="modal-content">
             <div class="modal-title">🔗 QR Code</div>
-            <p style="font-size: 14px; color: var(--grey); margin-bottom: 32px;">Scan or download to share</p>
+            <p style="font-size: 14px; color: #666; margin-bottom: 32px;">Scan to share</p>
             <div id="qrCode"></div>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="downloadQR()">Download</button>
-                <button class="btn btn-secondary" onclick="closeQRModal()">Close</button>
+                <button class="btn btn-primary" style="background: #f5f5f5; color: #000; border: 1px solid #e0e0e0;" onclick="hideQR()">Close</button>
             </div>
         </div>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        const FELINE_EMOJIS = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🐈'];
-        const CAT_IMAGES = [
+        const emojis = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🐈'];
+        const randomEmojis = ['😊', '😍', '🎉', '🔥', '💯', '🙌', '👏'];
+        const images = [
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/0d0c8c9e9d0ba9c1b809adb0b9d3b3a5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182406Z&X-Amz-Expires=3600&X-Amz-Signature=4a1942bafe71c18497fe6bec5a098ff25de039cf2bd12c8c27fea37fc1a36c44&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/89e03893ce9e2f5bd17e280e614ae4c3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182357Z&X-Amz-Expires=3600&X-Amz-Signature=ff14d97685be921188f138d6dd6105f1d431f74e4472e74ee912c15148f6572e&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cf4a66eefbe6f976c844b7106d4e40b3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182356Z&X-Amz-Expires=3600&X-Amz-Signature=9f871b833dcddd4e536c5cfe2223e7d3029b9bbf1609f3fc1d7f8a3b8c3b5&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cfe46af1334a74738cc580c774ee6558?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182358Z&X-Amz-Expires=3600&X-Amz-Signature=f460217ebf48d3c2b75f5c5ce27b47c87fd1cde1bed9f662c0e76216497aa4f2&X-Amz-SignedHeaders=host',
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host'
         ];
-        const EMOJIS = ['😊', '😍', '🎉', '🔥', '💯', '🙌', '👏', '✨', '🌟', '💫'];
         
-        let userIP = Math.random().toString();
-        let userAvatar = FELINE_EMOJIS[Math.floor(Math.random() * FELINE_EMOJIS.length)];
-        let posts = [];
+        let avatar = emojis[Math.floor(Math.random() * emojis.length)];
+        let allPosts = [];
         
         function init() {
-            document.getElementById('userAvatar').textContent = userAvatar;
-            document.getElementById('userLabel').textContent = 'You (' + userAvatar + ')';
+            document.getElementById('myAvatar').textContent = avatar;
+            document.getElementById('myLabel').textContent = 'You (' + avatar + ')';
             
-            const saved = localStorage.getItem('oscarPosts');
+            let saved = localStorage.getItem('posts');
             if (saved) {
-                try {
-                    posts = JSON.parse(saved);
-                } catch (e) {
-                    posts = getDefaultPosts();
-                }
+                allPosts = JSON.parse(saved);
             } else {
-                posts = getDefaultPosts();
-                localStorage.setItem('oscarPosts', JSON.stringify(posts));
+                allPosts = [
+                    { avatar: '🦁', text: 'Just saw this beautiful white and grey cat lounging in the garden! 🌿', img: images[0], time: '2h', views: 42, comments: 8, likes: 23 },
+                    { avatar: '🐯', text: 'Oscar visited for hours today, playing on the porch! 🎾', img: images[1], time: '4h', views: 56, comments: 12, likes: 31 },
+                    { avatar: '🐆', text: 'The most adorable furball. Those grey spots are perfection. 💙', img: images[2], time: '6h', views: 34, comments: 5, likes: 18 },
+                    { avatar: '🐱', text: 'Caught this guy gazing at birds! 🐦 Such focus!', img: images[3], time: '8h', views: 29, comments: 3, likes: 15 },
+                    { avatar: '🦅', text: 'Oscar running and jumping! So much energy! 💫', img: images[4], time: '10h', views: 18, comments: 2, likes: 9 }
+                ];
+                localStorage.setItem('posts', JSON.stringify(allPosts));
             }
             
-            renderPosts();
+            render();
         }
         
-        function getDefaultPosts() {
-            return [
-                {
-                    avatar: '🦁',
-                    text: 'Just saw this beautiful white and grey cat lounging in the garden! He seems so peaceful. 🌿',
-                    image: CAT_IMAGES[0],
-                    time: '2h',
-                    views: 42,
-                    comments: 8,
-                    likes: 23
-                },
-                {
-                    avatar: '🐯',
-                    text: 'Oscar visited for hours today, playing on the porch! 🎾 The most playful visitor we could ask for.',
-                    image: CAT_IMAGES[1],
-                    time: '4h',
-                    views: 56,
-                    comments: 12,
-                    likes: 31
-                },
-                {
-                    avatar: '🐆',
-                    text: 'The most adorable little furball. Those grey spots are absolutely perfection. 💙',
-                    image: CAT_IMAGES[2],
-                    time: '6h',
-                    views: 34,
-                    comments: 5,
-                    likes: 18
-                },
-                {
-                    avatar: '🐱',
-                    text: 'Caught this little guy gazing out the window at birds 🐦 Such focus, such determination!',
-                    image: CAT_IMAGES[3],
-                    time: '8h',
-                    views: 29,
-                    comments: 3,
-                    likes: 15
-                },
-                {
-                    avatar: '🦅',
-                    text: 'Pure joy watching Oscar run and jump around! So much energy! 💫 Best day ever.',
-                    image: CAT_IMAGES[4],
-                    time: '10h',
-                    views: 18,
-                    comments: 2,
-                    likes: 9
-                }
-            ];
-        }
-        
-        function renderPosts() {
-            const container = document.getElementById('postsContainer');
-            
-            if (posts.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--grey); padding: 48px 0;">No posts yet. Be the first to share!</p>';
-                return;
+        function render() {
+            let html = '';
+            for (let p of allPosts) {
+                html += '<div class="post"><div class="post-header"><div class="post-avatar">' + p.avatar + '</div><div class="post-meta"><div class="post-author">Spotter ' + p.avatar + '</div><div class="post-time">' + p.time + ' ago</div></div></div><div class="post-content"><div class="post-text">' + p.text + '</div>';
+                if (p.img) html += '<img src="' + p.img + '" class="post-image">';
+                html += '<div class="post-stats">👁️ ' + p.views + ' 💬 ' + p.comments + ' ❤️ ' + p.likes + '</div></div></div>';
             }
-            
-            container.innerHTML = posts.map(post => {
-                let imageHTML = '';
-                if (post.image) {
-                    imageHTML = `<img src="${post.image}" class="post-image" alt="Post image">`;
-                }
-                
-                return `
-                    <div class="post">
-                        <div class="post-header">
-                            <div class="post-avatar">${post.avatar}</div>
-                            <div class="post-meta">
-                                <div class="post-author">Spotter ${post.avatar}</div>
-                                <div class="post-time">${post.time} ago</div>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <div class="post-text">${escapeHTML(post.text)}</div>
-                            ${imageHTML}
-                            <div class="post-actions">
-                                <div class="action">👁️ ${post.views}</div>
-                                <div class="action">💬 ${post.comments}</div>
-                                <div class="action">❤️ ${post.likes}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            document.getElementById('posts').innerHTML = html;
         }
         
-        function escapeHTML(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        function createPost() {
-            const text = document.getElementById('postText').value.trim();
-            
-            if (!text) {
-                alert('Please write something!');
-                return;
-            }
-            
-            const newPost = {
-                avatar: userAvatar,
-                text: text,
-                image: null,
-                time: 'now',
-                views: 0,
-                comments: 0,
-                likes: 0
-            };
-            
-            posts.unshift(newPost);
-            localStorage.setItem('oscarPosts', JSON.stringify(posts));
-            document.getElementById('postText').value = '';
-            renderPosts();
+        function post() {
+            let text = document.getElementById('text').value.trim();
+            if (!text) { alert('Please write something!'); return; }
+            allPosts.unshift({ avatar: avatar, text: text, img: null, time: 'now', views: 0, comments: 0, likes: 0 });
+            localStorage.setItem('posts', JSON.stringify(allPosts));
+            document.getElementById('text').value = '';
+            render();
         }
         
         function addEmoji() {
-            const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
-            document.getElementById('postText').value += ' ' + emoji;
-            document.getElementById('postText').focus();
+            document.getElementById('text').value += ' ' + randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
         }
         
         function addImage() {
-            document.getElementById('postText').value += ' [📷 Image]';
-            document.getElementById('postText').focus();
+            document.getElementById('text').value += ' [📷 Image]';
         }
         
         function addVideo() {
-            document.getElementById('postText').value += ' [🎥 Video]';
-            document.getElementById('postText').focus();
+            document.getElementById('text').value += ' [🎥 Video]';
         }
         
-        function openQRModal() {
-            document.getElementById('qrModal').classList.add('active');
-            setTimeout(() => {
-                const qrContainer = document.getElementById('qrCode');
-                qrContainer.innerHTML = '';
-                new QRCode(qrContainer, {
+        function showQR() {
+            document.getElementById('qrmodal').classList.add('show');
+            setTimeout(function() {
+                document.getElementById('qrCode').innerHTML = '';
+                new QRCode(document.getElementById('qrCode'), {
                     text: window.location.href,
                     width: 280,
                     height: 280,
-                    colorDark: '#000000',
-                    colorLight: '#ffffff'
+                    colorDark: '#000',
+                    colorLight: '#fff'
                 });
-            }, 100);
+            }, 50);
         }
         
-        function closeQRModal() {
-            document.getElementById('qrModal').classList.remove('active');
+        function hideQR() {
+            document.getElementById('qrmodal').classList.remove('show');
         }
         
         function downloadQR() {
-            setTimeout(() => {
-                const canvas = document.querySelector('#qrCode canvas');
+            setTimeout(function() {
+                let canvas = document.querySelector('#qrCode canvas');
                 if (canvas) {
-                    const link = document.createElement('a');
+                    let link = document.createElement('a');
                     link.href = canvas.toDataURL('image/png');
-                    link.download = 'Oscar_QR_Code.png';
+                    link.download = 'Oscar_QR.png';
                     link.click();
                 }
             }, 100);
         }
         
-        document.addEventListener('DOMContentLoaded', init);
-        document.getElementById('postText').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                createPost();
-            }
-        });
+        init();
     </script>
 </body>
 </html>
