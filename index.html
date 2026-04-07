@@ -3,45 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar - Post & Discover</title>
-    <!-- [CSS OMITTED FOR BREVITY, see previous workbench output] -->
+    <title>Oscar - The Mystery Cat Community</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #fafafa;
+            color: #000;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 600px 300px;
+            gap: 20px;
+            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .sidebar-left {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feed-container {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e5e5;
+            height: 100vh;
+        }
+        
+        .feed-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .feed-header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .feed-header p {
+            font-size: 13px;
+            color: #65676b;
+            margin-top: 4px;
+        }
+        
+        .posts-feed {
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
+        }
+        
+        .posts-feed::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .posts-feed::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .posts-feed::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        
+        .posts-feed::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+        
+        .post {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 16px 24px;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .post:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .post-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        
+        .post-avatar {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .post-avatar svg {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .post-meta {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .post-author {
+            font-weight: 500;
+            font-size: 15px;
+            color: #000;
+        }
+        
+        .post-time {
+            font-size: 13px;
+            color: #65676b;
+            margin-left: 8px;
+        }
+        
+        .post-content {
+            margin-left: 56px;
+        }
+        
+        .post-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #000;
+            word-wrap: break-word;
+            margin-bottom: 12px;
+        }
+        
+        .post-image {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            max-height: 500px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        
+        .post-hashtags {
+            font-size: 13px;
+            color: #0a66c2;
+            margin-bottom: 8px;
+        }
+        
+        .post-hashtags span {
+            margin-right: 8px;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 425px;
+            margin-top: 12px;
+            color: #65676b;
+            padding-top: 8px;
+            border-top: 1px solid #e5e5e5;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 13px;
+            color: #65676b;
+            transition: color 0.2s;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .action-btn:hover {
+            color: #0a66c2;
+        }
+        
+        .sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .widget {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 16px;
+        }
+        
+        .widget h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #000;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e5e5;
+            font-size: 13px;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #65676b;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .my-cats {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 16px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .my-cats h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .cat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .cat-item {
+            padding: 8px 12px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .cat-item:hover {
+            background-color: #e5e5e5;
+        }
+        
+        .cat-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .cat-avatar-small svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .empty-state {
+            padding: 48px 24px;
+            text-align: center;
+            color: #65676b;
+        }
+        
+        .empty-state p {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr 600px;
+            }
+            
+            .sidebar-right {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar-left {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- COLLECTION SIDEBAR -->
-        <div class="collection-sidebar" id="collectionSidebar">
-            <button class="add-qr-btn" onclick="scanQR()" title="Scan QR Code">
-                +
-            </button>
-        </div>
-        <!-- MAIN FEED -->
-        <div class="main-feed">
+        <div class="sidebar-left"></div>
+        
+        <div class="feed-container">
             <div class="feed-header">
                 <h1>Oscar</h1>
-                <p id="collectionName">Scan a QR code to start</p>
+                <p>The mystery cat community</p>
             </div>
-            <div class="feed-container">
-                <div class="posts-wrapper">
-                    <!-- COMPOSE AREA -->
-                    <div class="compose-area">
-                        <div class="compose-box">
-                            <div class="compose-avatar" id="composeAvatar">🦁</div>
-                            <div class="compose-input-wrapper">
-                                <textarea class="compose-input" id="postInput" placeholder="What's on your mind?" maxlength="500"></textarea>
-                                <div class="compose-footer">
-                                    <button class="compose-btn" onclick="postMessage()" id="postBtn">Post</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- POSTS FEED -->
-                    <div id="feedContent"></div>
+            <div class="posts-feed" id="feedContainer"></div>
+        </div>
+        
+        <div class="sidebar-right">
+            <div class="widget">
+                <h3>📊 Community</h3>
+                <div class="stat-item">
+                    <span class="stat-label">Sightings</span>
+                    <span class="stat-value" id="totalPosts">0</span>
+                </div>
+            </div>
+            
+            <div class="my-cats">
+                <h3>🐱 My Scanned Cats</h3>
+                <div class="cat-list" id="myCatsList">
+                    <p style="font-size: 12px; color: #65676b;">Scan QR codes to collect cats!</p>
                 </div>
             </div>
         </div>
     </div>
+    
     <script>
-// [JS OMITTED FOR BREVITY, see previous workbench output]
+        const felines = ['lion', 'tiger', 'leopard', 'cheetah', 'puma', 'ocelot'];
+        
+        const svgAvatars = {
+            'lion': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#FDB95D" stroke="#F0A020" stroke-width="2"/><circle cx="60" cy="70" r="35" fill="#E89B3C"/><circle cx="140" cy="70" r="35" fill="#E89B3C"/><circle cx="50" cy="100" r="40" fill="#E89B3C"/><circle cx="150" cy="100" r="40" fill="#E89B3C"/><circle cx="70" cy="130" r="35" fill="#E89B3C"/><circle cx="130" cy="130" r="35" fill="#E89B3C"/><circle cx="100" cy="100" r="45" fill="#FDB95D"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#fff"/><circle cx="116" cy="89" r="2" fill="#fff"/><ellipse cx="100" cy="105" rx="8" ry="10" fill="#D4A574"/><path d="M 100 105 Q 90 115 80 110" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 110 115 120 110" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+            'tiger': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#FF9E1B" stroke="#E67E0F" stroke-width="2"/><circle cx="100" cy="100" r="50" fill="#FF9E1B"/><path d="M 70 80 Q 75 75 80 85" stroke="#333" stroke-width="3" fill="none"/><path d="M 120 80 Q 125 75 130 85" stroke="#333" stroke-width="3" fill="none"/><path d="M 75 100 Q 80 105 70 110" stroke="#333" stroke-width="3" fill="none"/><path d="M 125 100 Q 120 105 130 110" stroke="#333" stroke-width="3" fill="none"/><circle cx="85" cy="90" r="7" fill="#000"/><circle cx="115" cy="90" r="7" fill="#000"/><circle cx="86" cy="89" r="2.5" fill="#FFD700"/><circle cx="116" cy="89" r="2.5" fill="#FFD700"/><polygon points="70,60 65,40 75,55" fill="#FF9E1B"/><polygon points="130,60 135,40 125,55" fill="#FF9E1B"/><ellipse cx="100" cy="105" rx="7" ry="9" fill="#FF6B6B"/><path d="M 100 105 L 95 115 M 100 105 L 105 115" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>',
+            'leopard': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#D4A574" stroke="#B8860B" stroke-width="2"/><circle cx="70" cy="70" r="8" fill="#6B4423"/><circle cx="130" cy="70" r="8" fill="#6B4423"/><circle cx="60" cy="100" r="10" fill="#6B4423"/><circle cx="140" cy="100" r="10" fill="#6B4423"/><circle cx="75" cy="125" r="9" fill="#6B4423"/><circle cx="125" cy="125" r="9" fill="#6B4423"/><circle cx="100" cy="75" r="7" fill="#6B4423"/><circle cx="85" cy="90" r="7" fill="#000"/><circle cx="115" cy="90" r="7" fill="#000"/><circle cx="87" cy="88" r="2.5" fill="#FFD700"/><circle cx="117" cy="88" r="2.5" fill="#FFD700"/><ellipse cx="100" cy="105" rx="6" ry="8" fill="#6B4423"/><path d="M 100 105 Q 92 112 85 110" stroke="#000" stroke-width="2" fill="none"/><path d="M 100 105 Q 108 112 115 110" stroke="#000" stroke-width="2" fill="none"/></svg>',
+            'cheetah': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#F4D03F" stroke="#E8A60F" stroke-width="2"/><path d="M 85 95 L 75 110" stroke="#333" stroke-width="2"/><path d="M 115 95 L 125 110" stroke="#333" stroke-width="2"/><circle cx="70" cy="75" r="5" fill="#333"/><circle cx="130" cy="75" r="5" fill="#333"/><circle cx="65" cy="105" r="4" fill="#333"/><circle cx="135" cy="105" r="4" fill="#333"/><circle cx="80" cy="130" r="5" fill="#333"/><circle cx="120" cy="130" r="5" fill="#333"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#fff"/><circle cx="116" cy="89" r="2" fill="#fff"/><ellipse cx="100" cy="105" rx="6" ry="8" fill="#333"/><path d="M 100 115 L 95 125 L 100 123 L 105 125 Z" fill="#F4D03F"/></svg>',
+            'puma': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#8B7355" stroke="#6B5344" stroke-width="2"/><circle cx="100" cy="100" r="48" fill="#8B7355"/><polygon points="70,50 65,30 75,45" fill="#8B7355"/><polygon points="130,50 135,30 125,45" fill="#8B7355"/><polygon points="70,50 68,38 75,48" fill="#F4A460"/><polygon points="130,50 132,38 125,48" fill="#F4A460"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#90EE90"/><circle cx="116" cy="89" r="2" fill="#90EE90"/><ellipse cx="100" cy="105" rx="7" ry="8" fill="#654321"/><path d="M 100 105 Q 92 115 82 112" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 108 115 118 112" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="50" y1="95" x2="70" y2="93" stroke="#000" stroke-width="1.5"/><line x1="50" y1="105" x2="70" y2="107" stroke="#000" stroke-width="1.5"/><line x1="150" y1="95" x2="130" y2="93" stroke="#000" stroke-width="1.5"/><line x1="150" y1="105" x2="130" y2="107" stroke="#000" stroke-width="1.5"/></svg>',
+            'ocelot': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#C9A961" stroke="#B8942F" stroke-width="2"/><ellipse cx="70" cy="70" rx="12" ry="15" fill="#6B4423" opacity="0.8"/><ellipse cx="130" cy="70" rx="12" ry="15" fill="#6B4423" opacity="0.8"/><ellipse cx="60" cy="100" rx="10" ry="14" fill="#6B4423" opacity="0.7"/><ellipse cx="140" cy="100" rx="10" ry="14" fill="#6B4423" opacity="0.7"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="88" r="2.5" fill="#00FF00"/><circle cx="116" cy="88" r="2.5" fill="#00FF00"/><ellipse cx="100" cy="105" rx="6" ry="7" fill="#FF69B4"/><path d="M 100 105 Q 92 113 84 110" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 108 113 116 110" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'
+        };
+        
+        let posts = JSON.parse(localStorage.getItem('oscarPosts')) || [];
+        let myCats = JSON.parse(localStorage.getItem('myCats')) || [];
+        
+        function getRandomFeline() {
+            return felines[Math.floor(Math.random() * felines.length)];
+        }
+        
+        function formatTime(date) {
+            const now = new Date();
+            const diff = now - date;
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            if (days > 0) return days + 'd';
+            if (hours > 0) return hours + 'h';
+            if (minutes > 0) return minutes + 'm';
+            return 'now';
+        }
+        
+        function renderFeed() {
+            const container = document.getElementById('feedContainer');
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>No sightings yet.<br>Scan a QR code to start the adventure.</p></div>';
+                return;
+            }
+            
+            container.innerHTML = posts.map(post => {
+                const feline = post.feline || getRandomFeline();
+                const timeStr = formatTime(new Date(post.timestamp));
+                
+                let imageHtml = '';
+                if (post.image) {
+                    imageHtml = `<img src="${post.image}" class="post-image" alt="Oscar sighting">`;
+                }
+                
+                return `
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-avatar">${svgAvatars[feline]}</div>
+                            <div class="post-meta">
+                                <span class="post-author">Oscar Spotter</span>
+                                <span class="post-time">${timeStr}</span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-text">${post.text}</p>
+                            ${imageHtml}
+                            ${post.hashtags ? `<div class="post-hashtags">${post.hashtags.split(' ').map(tag => `<span>${tag}</span>`).join('')}</div>` : ''}
+                            <div class="post-actions">
+                                <button class="action-btn">❤️ Like</button>
+                                <button class="action-btn">💬 Comment</button>
+                                <button class="action-btn">📤 Share</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('totalPosts').textContent = posts.length;
+        }
+        
+        function renderMyCats() {
+            const container = document.getElementById('myCatsList');
+            if (myCats.length === 0) {
+                container.innerHTML = '<p style="font-size: 12px; color: #65676b;">Scan QR codes to collect cats!</p>';
+                return;
+            }
+            
+            container.innerHTML = myCats.map((cat, idx) => `
+                <div class="cat-item" onclick="window.open('profile.html?id=' + '${cat.id}')">
+                    <div class="cat-avatar-small">${svgAvatars[cat.feline]}</div>
+                    <span>${cat.name}</span>
+                </div>
+            `).join('');
+        }
+        
+        window.addEventListener('load', () => {
+            if (posts.length === 0) {
+                const defaultPosts = [
+                    {
+                        text: "Just saw Oscar stretched out in the sunshine, looking absolutely content. Such grace.",
+                        hashtags: "#OscarSighting #CatsOfOscar #Peaceful",
+                        timestamp: new Date(Date.now() - 3600000),
+                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/0d0c8c9e9d0ba9c1b809adb0b9d3b3a5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182406Z&X-Amz-Expires=3600&X-Amz-Signature=4a1942bafe71c18497fe6bec5a098ff25de039cf2bd12c8c27fea37fc1a36c44&X-Amz-SignedHeaders=host",
+                        feline: 'lion'
+                    },
+                    {
+                        text: "Oscar was playing with my garden toys today. The energy! The joy! This cat is pure personality.",
+                        hashtags: "#OscarSighting #PlayfulMoment #CatsOfOscar",
+                        timestamp: new Date(Date.now() - 7200000),
+                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/89e03893ce9e2f5bd17e280e614ae4c3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182357Z&X-Amz-Expires=3600&X-Amz-Signature=ff14d97685be921188f138d6dd6105f1d431f74e4472e74ee912c15148f6572e&X-Amz-SignedHeaders=host",
+                        feline: 'tiger'
+                    },
+                    {
+                        text: "The way Oscar watches the birds through the window is hypnotic. Those eyes miss nothing.",
+                        hashtags: "#OscarSighting #WindowWatching #MysteryOfOscar",
+                        timestamp: new Date(Date.now() - 10800000),
+                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cf4a66eefbe6f976c844b7106d4e40b3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182356Z&X-Amz-Expires=3600&X-Amz-Signature=9f871b833dcddd4e536c5cfe2223e7d3029b9bbf1609f3fc1d7f8a3b8c3b5&X-Amz-SignedHeaders=host",
+                        feline: 'leopard'
+                    },
+                    {
+                        text: "Oscar curled up in his favorite spot today. This boy is living his best life.",
+                        hashtags: "#OscarSighting #CozyLife #CatsOfOscar",
+                        timestamp: new Date(Date.now() - 14400000),
+                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cfe46af1334a74738cc580c774ee6558?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182358Z&X-Amz-Expires=3600&X-Amz-Signature=f460217ebf48d3c2b75f5c5ce27b47c87fd1cde1bed9f662c0e76216497aa4f2&X-Amz-SignedHeaders=host",
+                        feline: 'cheetah'
+                    },
+                    {
+                        text: "Oscar is absolutely flying around the garden today. Never seen a cat move that fast. Incredible.",
+                        hashtags: "#OscarSighting #FastFeline #CatsOfOscar",
+                        timestamp: new Date(Date.now() - 18000000),
+                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host",
+                        feline: 'puma'
+                    }
+                ];
+                
+                posts = defaultPosts;
+                localStorage.setItem('oscarPosts', JSON.stringify(posts));
+            }
+            
+            renderFeed();
+            renderMyCats();
+        });
     </script>
 </body>
 </html>
