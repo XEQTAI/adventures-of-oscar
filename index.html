@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar - Community Feed</title>
+    <title>The Adventures of Oscar</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -305,6 +305,7 @@
             background: var(--light-grey);
             object-fit: cover;
             border: 1px solid var(--border);
+            display: block;
         }
         
         .post-actions {
@@ -436,19 +437,19 @@
                 <div class="header-left">
                     <div class="logo">🐱</div>
                     <div class="brand">
-                        <div class="brand-name" id="catName">Oscar</div>
+                        <div class="brand-name">The Adventures of <span id="catName">Oscar</span></div>
                         <div class="brand-tagline">Community Feed</div>
                     </div>
                 </div>
                 <div class="header-right">
-                    <button class="btn btn-primary" id="qrButton">🔗 QR Code</button>
+                    <button class="btn btn-primary" id="qrButton">🔗 Share QR</button>
                 </div>
             </div>
         </header>
         
         <main>
             <div class="feed-intro">
-                <h1 id="pageTitle">The Adventures of Oscar</h1>
+                <h1>The Adventures of <span id="catName2">Oscar</span></h1>
                 <p>Share sightings of your favorite visitor. Posts are permanent and visible to everyone.</p>
             </div>
             
@@ -460,7 +461,8 @@
                 <textarea 
                     class="compose-input" 
                     id="composeText" 
-                    placeholder="What's on your mind? Share your sighting..."></textarea>
+                    placeholder="What's on your mind? Share your sighting..."
+                    maxlength="500"></textarea>
                 <div class="compose-actions">
                     <div class="compose-tools">
                         <div class="compose-tool" title="Add emoji" id="emojiBtn">😊</div>
@@ -506,29 +508,12 @@
             'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host'
         ];
         
-        const sampleMessages = [
-            'Just saw this beautiful white and grey cat lounging in the garden! He seems so peaceful. 🌿',
-            'Visited for hours today, playing on the porch! 🎾 The most playful visitor we could ask for.',
-            'The most adorable little furball. Those grey spots are absolutely perfection. 💙',
-            'Caught this little guy gazing out the window at birds 🐦 Such focus, such determination!',
-            'Pure joy watching them run and jump around! So much energy! 💫 Best day ever seeing this furball.'
-        ];
-        
-        let catName = 'Oscar';
         let userIP = null;
         let userAvatar = null;
         let posts = [];
-        
-        function getCatNameFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('cat') || 'Oscar';
-        }
+        let catName = 'Oscar';
         
         async function initializeUser() {
-            catName = getCatNameFromURL();
-            document.getElementById('catName').textContent = catName;
-            document.getElementById('pageTitle').textContent = 'The Adventures of ' + catName;
-            
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
                 const data = await response.json();
@@ -562,7 +547,7 @@
         function renderPosts() {
             const container = document.getElementById('postsContainer');
             
-            if (!posts || posts.length === 0) {
+            if (posts.length === 0) {
                 container.innerHTML = '<p style="text-align: center; color: var(--grey); padding: 48px 0;">No posts yet. Be the first to share!</p>';
                 return;
             }
@@ -572,30 +557,26 @@
                 const timeStr = formatTime(postTime);
                 
                 let mediaHTML = '';
-                if (post.image) {
-                    mediaHTML = `<div class="post-media"><img src="${post.image}" class="post-image" alt="Post image" loading="lazy"><\/div>`;
+                if (post.image && post.image.startsWith('http')) {
+                    mediaHTML = `<div class="post-media"><img src="${post.image}" class="post-image" alt="Post image" loading="lazy" onerror="this.style.display='none'"><\/div>`;
                 }
-                
-                const views = post.views || 0;
-                const comments = post.comments || 0;
-                const likes = post.likes || 0;
                 
                 return `
                     <div class="post">
                         <div class="post-header">
-                            <div class="post-avatar">${post.avatar || '🐱'}<\/div>
+                            <div class="post-avatar">${post.avatar}<\/div>
                             <div class="post-meta">
-                                <div class="post-author">Spotter ${post.avatar || '🐱'}<\/div>
+                                <div class="post-author">Spotter ${post.avatar}<\/div>
                                 <div class="post-time">${timeStr}<\/div>
                             <\/div>
                         <\/div>
                         <div class="post-content">
-                            <div class="post-text">${escapeHtml(post.text || '')}<\/div>
+                            <div class="post-text">${escapeHtml(post.text)}<\/div>
                             ${mediaHTML}
                             <div class="post-actions">
-                                <div class="action"><span class="action-icon">👁️<\/span> ${views}<\/div>
-                                <div class="action"><span class="action-icon">💬<\/span> ${comments}<\/div>
-                                <div class="action"><span class="action-icon">❤️<\/span> ${likes}<\/div>
+                                <div class="action"><span class="action-icon">👁️<\/span> ${post.views}<\/div>
+                                <div class="action"><span class="action-icon">💬<\/span> ${post.comments}<\/div>
+                                <div class="action"><span class="action-icon">❤️<\/span> ${post.likes}<\/div>
                             <\/div>
                         <\/div>
                     <\/div>
@@ -615,73 +596,70 @@
         }
         
         function loadPosts() {
-            const key = 'oscarPosts_' + catName;
-            const saved = localStorage.getItem(key);
+            const saved = localStorage.getItem('oscarPosts');
             if (saved) {
                 try {
                     posts = JSON.parse(saved);
                 } catch (e) {
-                    posts = createDefaultPosts();
+                    posts = [];
                 }
-            } else {
-                posts = createDefaultPosts();
+            }
+            
+            if (posts.length === 0) {
+                posts = [
+                    {
+                        avatar: '🦁',
+                        text: 'Just saw this beautiful white and grey cat lounging in the garden! He seems so peaceful. 🌿',
+                        image: catImages[0],
+                        timestamp: new Date(Date.now() - 2 * 3600000).toISOString(),
+                        views: 42,
+                        comments: 8,
+                        likes: 23
+                    },
+                    {
+                        avatar: '🐯',
+                        text: 'Oscar visited for hours today, playing on the porch! 🎾 The most playful visitor we could ask for.',
+                        image: catImages[1],
+                        timestamp: new Date(Date.now() - 4 * 3600000).toISOString(),
+                        views: 56,
+                        comments: 12,
+                        likes: 31
+                    },
+                    {
+                        avatar: '🐆',
+                        text: 'The most adorable little furball. Those grey spots are absolutely perfection. 💙',
+                        image: catImages[2],
+                        timestamp: new Date(Date.now() - 6 * 3600000).toISOString(),
+                        views: 34,
+                        comments: 5,
+                        likes: 18
+                    },
+                    {
+                        avatar: '🐱',
+                        text: 'Caught this little guy gazing out the window at birds 🐦 Such focus, such determination!',
+                        image: catImages[3],
+                        timestamp: new Date(Date.now() - 8 * 3600000).toISOString(),
+                        views: 29,
+                        comments: 3,
+                        likes: 15
+                    },
+                    {
+                        avatar: '🦅',
+                        text: 'Pure joy watching Oscar run and jump around! So much energy! 💫 Best day ever seeing this little furball.',
+                        image: catImages[4],
+                        timestamp: new Date(Date.now() - 10 * 3600000).toISOString(),
+                        views: 18,
+                        comments: 2,
+                        likes: 9
+                    }
+                ];
+                savePosts();
             }
             renderPosts();
         }
         
-        function createDefaultPosts() {
-            return [
-                {
-                    avatar: '🦁',
-                    text: sampleMessages[0],
-                    image: catImages[0],
-                    timestamp: new Date(Date.now() - 2 * 3600000).toISOString(),
-                    views: 42,
-                    comments: 8,
-                    likes: 23
-                },
-                {
-                    avatar: '🐯',
-                    text: sampleMessages[1],
-                    image: catImages[1],
-                    timestamp: new Date(Date.now() - 4 * 3600000).toISOString(),
-                    views: 56,
-                    comments: 12,
-                    likes: 31
-                },
-                {
-                    avatar: '🐆',
-                    text: sampleMessages[2],
-                    image: catImages[2],
-                    timestamp: new Date(Date.now() - 6 * 3600000).toISOString(),
-                    views: 34,
-                    comments: 5,
-                    likes: 18
-                },
-                {
-                    avatar: '🐱',
-                    text: sampleMessages[3],
-                    image: catImages[3],
-                    timestamp: new Date(Date.now() - 8 * 3600000).toISOString(),
-                    views: 29,
-                    comments: 3,
-                    likes: 15
-                },
-                {
-                    avatar: '🦅',
-                    text: sampleMessages[4],
-                    image: catImages[4],
-                    timestamp: new Date(Date.now() - 10 * 3600000).toISOString(),
-                    views: 18,
-                    comments: 2,
-                    likes: 9
-                }
-            ];
-        }
-        
         function savePosts() {
-            const key = 'oscarPosts_' + catName;
-            localStorage.setItem(key, JSON.stringify(posts));
+            localStorage.setItem('oscarPosts', JSON.stringify(posts));
         }
         
         function postMessage() {
@@ -705,6 +683,7 @@
             savePosts();
             document.getElementById('composeText').value = '';
             renderPosts();
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
         
         function insertEmoji() {
@@ -738,9 +717,8 @@
         function generateQR() {
             const qrContainer = document.getElementById('qrCode');
             qrContainer.innerHTML = '';
-            const qrURL = window.location.href.split('?')[0] + '?cat=' + encodeURIComponent(catName);
             new QRCode(qrContainer, {
-                text: qrURL,
+                text: window.location.href,
                 width: 280,
                 height: 280,
                 colorDark: '#000000',
@@ -754,7 +732,7 @@
                 if (canvas) {
                     const link = document.createElement('a');
                     link.href = canvas.toDataURL('image/png');
-                    link.download = 'The_Adventures_of_' + catName + '_QR.png';
+                    link.download = catName + '_QR_Code.png';
                     link.click();
                 }
             }, 100);
