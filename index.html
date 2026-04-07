@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar - The Mystery Cat Community</title>
+    <title>Oscar - Social Feed</title>
     <style>
         * {
             margin: 0;
@@ -11,488 +11,646 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #00d4ff;
+            --accent-dark: #0099cc;
+            --border: #2a2a2a;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: #fafafa;
-            color: #000;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 600px 300px;
-            gap: 20px;
-            padding: 20px;
-            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow: hidden;
         }
         
-        .sidebar-left {
+        .app-container {
             display: flex;
-            flex-direction: column;
+            height: 100vh;
+            gap: 0;
         }
         
+        /* LEFT SIDEBAR - SCANNED OBJECTS */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 16px 0;
+        }
+        
+        .sidebar-header {
+            padding: 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 8px;
+        }
+        
+        .sidebar-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .sidebar-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .sidebar-item:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .sidebar-item.active {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+        
+        .sidebar-item-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .sidebar-actions {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .qr-trigger {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .qr-trigger:hover {
+            background: var(--accent-dark);
+        }
+        
+        /* MAIN FEED */
         .feed-container {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #e5e5e5;
-            height: 100vh;
+            background: var(--bg-primary);
         }
         
         .feed-header {
             padding: 16px 24px;
-            border-bottom: 1px solid #e5e5e5;
-            background: #fff;
+            border-bottom: 1px solid var(--border);
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         
-        .feed-header h1 {
+        .feed-title {
             font-size: 20px;
             font-weight: 600;
-            color: #000;
+            letter-spacing: -0.5px;
         }
         
-        .feed-header p {
-            font-size: 13px;
-            color: #65676b;
+        .feed-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
             margin-top: 4px;
         }
         
-        .posts-feed {
+        .posts-area {
             flex: 1;
             overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #ccc transparent;
-        }
-        
-        .posts-feed::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .posts-feed::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        .posts-feed::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-        
-        .posts-feed::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
+            scroll-behavior: smooth;
         }
         
         .post {
-            border-bottom: 1px solid #e5e5e5;
             padding: 16px 24px;
-            transition: background-color 0.2s ease;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
             cursor: pointer;
+            display: flex;
+            gap: 12px;
         }
         
         .post:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .post-header {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            align-items: flex-start;
+            background: var(--bg-secondary);
         }
         
         .post-avatar {
-            width: 44px;
-            height: 44px;
-            min-width: 44px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
+            background: var(--bg-tertiary);
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            font-size: 28px;
+            border: 1px solid var(--border);
         }
         
-        .post-avatar svg {
-            width: 36px;
-            height: 36px;
-        }
-        
-        .post-meta {
+        .post-content {
             flex: 1;
             min-width: 0;
         }
         
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
         .post-author {
-            font-weight: 500;
-            font-size: 15px;
-            color: #000;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
         
         .post-time {
-            font-size: 13px;
-            color: #65676b;
-            margin-left: 8px;
-        }
-        
-        .post-content {
-            margin-left: 56px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.7;
         }
         
         .post-text {
             font-size: 15px;
             line-height: 1.5;
-            color: #000;
-            word-wrap: break-word;
             margin-bottom: 12px;
+            color: var(--text-primary);
         }
         
         .post-image {
             width: 100%;
+            max-width: 500px;
             border-radius: 12px;
             margin-bottom: 12px;
-            max-height: 500px;
             object-fit: cover;
-            background: #f0f0f0;
-        }
-        
-        .post-hashtags {
-            font-size: 13px;
-            color: #0a66c2;
-            margin-bottom: 8px;
-        }
-        
-        .post-hashtags span {
-            margin-right: 8px;
+            max-height: 400px;
+            background: var(--bg-tertiary);
         }
         
         .post-actions {
             display: flex;
-            justify-content: space-between;
-            max-width: 425px;
+            gap: 24px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 12px;
-            color: #65676b;
-            padding-top: 8px;
-            border-top: 1px solid #e5e5e5;
         }
         
         .action-btn {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 0;
-            cursor: pointer;
-            border: none;
+            gap: 6px;
             background: none;
-            font-size: 13px;
-            color: #65676b;
-            transition: color 0.2s;
-            flex: 1;
-            justify-content: center;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            padding: 0;
         }
         
         .action-btn:hover {
-            color: #0a66c2;
+            color: var(--accent);
         }
         
-        .sidebar-right {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        
-        .widget {
-            background: #fff;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            padding: 16px;
-        }
-        
-        .widget h3 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #000;
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e5e5e5;
-            font-size: 13px;
-        }
-        
-        .stat-item:last-child {
-            border-bottom: none;
-        }
-        
-        .stat-label {
-            color: #65676b;
-        }
-        
-        .stat-value {
-            font-weight: 600;
-            color: #000;
-        }
-        
-        .my-cats {
-            background: #fff;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            padding: 16px;
-            overflow-y: auto;
-            max-height: 300px;
-        }
-        
-        .my-cats h3 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        
-        .cat-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .cat-item {
-            padding: 8px 12px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .cat-item:hover {
-            background-color: #e5e5e5;
-        }
-        
-        .cat-avatar-small {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
+        /* MODAL - QR CODE */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
         
-        .cat-avatar-small svg {
-            width: 20px;
-            height: 20px;
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .modal-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        #qrCode {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin: 24px 0;
+            display: inline-block;
+        }
+        
+        #qrCode canvas {
+            display: block;
+        }
+        
+        .modal-instructions {
+            text-align: left;
+            background: var(--bg-tertiary);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin: 16px 0;
+            line-height: 1.8;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .modal-btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+        
+        .modal-btn-primary:hover {
+            background: var(--accent-dark);
+        }
+        
+        .modal-btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .modal-btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+        
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar-item {
+                padding: 12px 8px;
+                justify-content: center;
+            }
+            
+            .sidebar-item-name {
+                display: none;
+            }
+            
+            .feed-container {
+                padding: 0;
+            }
         }
         
         .empty-state {
-            padding: 48px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 40px;
             text-align: center;
-            color: #65676b;
+            color: var(--text-secondary);
         }
         
-        .empty-state p {
-            font-size: 15px;
-            line-height: 1.5;
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
         }
         
-        @media (max-width: 1200px) {
-            .container {
-                grid-template-columns: 1fr 600px;
-            }
-            
-            .sidebar-right {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar-left {
-                display: none;
-            }
+        .empty-state-text {
+            font-size: 14px;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar-left"></div>
-        
-        <div class="feed-container">
-            <div class="feed-header">
-                <h1>Oscar</h1>
-                <p>The mystery cat community</p>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">Discovered</div>
+            <div class="sidebar-items" id="sidebarItems"></div>
+            <div class="sidebar-actions">
+                <button class="qr-trigger" onclick="openQRModal()">+ Scan QR</button>
             </div>
-            <div class="posts-feed" id="feedContainer"></div>
         </div>
         
-        <div class="sidebar-right">
-            <div class="widget">
-                <h3>📊 Community</h3>
-                <div class="stat-item">
-                    <span class="stat-label">Sightings</span>
-                    <span class="stat-value" id="totalPosts">0</span>
-                </div>
+        <!-- FEED -->
+        <div class="feed-container">
+            <div class="feed-header">
+                <div class="feed-title" id="feedTitle">Welcome to Oscar</div>
+                <div class="feed-subtitle" id="feedSubtitle">All sightings across the community</div>
             </div>
-            
-            <div class="my-cats">
-                <h3>🐱 My Scanned Cats</h3>
-                <div class="cat-list" id="myCatsList">
-                    <p style="font-size: 12px; color: #65676b;">Scan QR codes to collect cats!</p>
-                </div>
+            <div class="posts-area" id="postsArea"></div>
+        </div>
+    </div>
+    
+    <!-- QR MODAL -->
+    <div class="modal" id="qrModal">
+        <div class="modal-content">
+            <div class="modal-title">📱 Scan QR Code</div>
+            <div class="modal-subtitle">Point your camera at any Oscar QR code</div>
+            <div id="qrCode"></div>
+            <div class="modal-instructions">
+                <strong>How it works:</strong><br>
+                • Scan the QR code with your phone camera<br>
+                • Each cat adds to your collection<br>
+                • See all posts from that cat<br>
+                • Share your own sightings
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-primary" onclick="downloadQR()">Download</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeQRModal()">Close</button>
             </div>
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-        const felines = ['lion', 'tiger', 'leopard', 'cheetah', 'puma', 'ocelot'];
+        // Feline avatars
+        const felineEmojis = ['🦁', '🐯', '🐆', '🐱', '🦅', '🐅', '🧏', '🤺', '🐈'];
         
-        const svgAvatars = {
-            'lion': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#FDB95D" stroke="#F0A020" stroke-width="2"/><circle cx="60" cy="70" r="35" fill="#E89B3C"/><circle cx="140" cy="70" r="35" fill="#E89B3C"/><circle cx="50" cy="100" r="40" fill="#E89B3C"/><circle cx="150" cy="100" r="40" fill="#E89B3C"/><circle cx="70" cy="130" r="35" fill="#E89B3C"/><circle cx="130" cy="130" r="35" fill="#E89B3C"/><circle cx="100" cy="100" r="45" fill="#FDB95D"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#fff"/><circle cx="116" cy="89" r="2" fill="#fff"/><ellipse cx="100" cy="105" rx="8" ry="10" fill="#D4A574"/><path d="M 100 105 Q 90 115 80 110" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 110 115 120 110" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
-            'tiger': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#FF9E1B" stroke="#E67E0F" stroke-width="2"/><circle cx="100" cy="100" r="50" fill="#FF9E1B"/><path d="M 70 80 Q 75 75 80 85" stroke="#333" stroke-width="3" fill="none"/><path d="M 120 80 Q 125 75 130 85" stroke="#333" stroke-width="3" fill="none"/><path d="M 75 100 Q 80 105 70 110" stroke="#333" stroke-width="3" fill="none"/><path d="M 125 100 Q 120 105 130 110" stroke="#333" stroke-width="3" fill="none"/><circle cx="85" cy="90" r="7" fill="#000"/><circle cx="115" cy="90" r="7" fill="#000"/><circle cx="86" cy="89" r="2.5" fill="#FFD700"/><circle cx="116" cy="89" r="2.5" fill="#FFD700"/><polygon points="70,60 65,40 75,55" fill="#FF9E1B"/><polygon points="130,60 135,40 125,55" fill="#FF9E1B"/><ellipse cx="100" cy="105" rx="7" ry="9" fill="#FF6B6B"/><path d="M 100 105 L 95 115 M 100 105 L 105 115" stroke="#000" stroke-width="2" stroke-linecap="round"/></svg>',
-            'leopard': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#D4A574" stroke="#B8860B" stroke-width="2"/><circle cx="70" cy="70" r="8" fill="#6B4423"/><circle cx="130" cy="70" r="8" fill="#6B4423"/><circle cx="60" cy="100" r="10" fill="#6B4423"/><circle cx="140" cy="100" r="10" fill="#6B4423"/><circle cx="75" cy="125" r="9" fill="#6B4423"/><circle cx="125" cy="125" r="9" fill="#6B4423"/><circle cx="100" cy="75" r="7" fill="#6B4423"/><circle cx="85" cy="90" r="7" fill="#000"/><circle cx="115" cy="90" r="7" fill="#000"/><circle cx="87" cy="88" r="2.5" fill="#FFD700"/><circle cx="117" cy="88" r="2.5" fill="#FFD700"/><ellipse cx="100" cy="105" rx="6" ry="8" fill="#6B4423"/><path d="M 100 105 Q 92 112 85 110" stroke="#000" stroke-width="2" fill="none"/><path d="M 100 105 Q 108 112 115 110" stroke="#000" stroke-width="2" fill="none"/></svg>',
-            'cheetah': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#F4D03F" stroke="#E8A60F" stroke-width="2"/><path d="M 85 95 L 75 110" stroke="#333" stroke-width="2"/><path d="M 115 95 L 125 110" stroke="#333" stroke-width="2"/><circle cx="70" cy="75" r="5" fill="#333"/><circle cx="130" cy="75" r="5" fill="#333"/><circle cx="65" cy="105" r="4" fill="#333"/><circle cx="135" cy="105" r="4" fill="#333"/><circle cx="80" cy="130" r="5" fill="#333"/><circle cx="120" cy="130" r="5" fill="#333"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#fff"/><circle cx="116" cy="89" r="2" fill="#fff"/><ellipse cx="100" cy="105" rx="6" ry="8" fill="#333"/><path d="M 100 115 L 95 125 L 100 123 L 105 125 Z" fill="#F4D03F"/></svg>',
-            'puma': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#8B7355" stroke="#6B5344" stroke-width="2"/><circle cx="100" cy="100" r="48" fill="#8B7355"/><polygon points="70,50 65,30 75,45" fill="#8B7355"/><polygon points="130,50 135,30 125,45" fill="#8B7355"/><polygon points="70,50 68,38 75,48" fill="#F4A460"/><polygon points="130,50 132,38 125,48" fill="#F4A460"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="89" r="2" fill="#90EE90"/><circle cx="116" cy="89" r="2" fill="#90EE90"/><ellipse cx="100" cy="105" rx="7" ry="8" fill="#654321"/><path d="M 100 105 Q 92 115 82 112" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 108 115 118 112" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="50" y1="95" x2="70" y2="93" stroke="#000" stroke-width="1.5"/><line x1="50" y1="105" x2="70" y2="107" stroke="#000" stroke-width="1.5"/><line x1="150" y1="95" x2="130" y2="93" stroke="#000" stroke-width="1.5"/><line x1="150" y1="105" x2="130" y2="107" stroke="#000" stroke-width="1.5"/></svg>',
-            'ocelot': '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="95" fill="#C9A961" stroke="#B8942F" stroke-width="2"/><ellipse cx="70" cy="70" rx="12" ry="15" fill="#6B4423" opacity="0.8"/><ellipse cx="130" cy="70" rx="12" ry="15" fill="#6B4423" opacity="0.8"/><ellipse cx="60" cy="100" rx="10" ry="14" fill="#6B4423" opacity="0.7"/><ellipse cx="140" cy="100" rx="10" ry="14" fill="#6B4423" opacity="0.7"/><circle cx="85" cy="90" r="6" fill="#000"/><circle cx="115" cy="90" r="6" fill="#000"/><circle cx="86" cy="88" r="2.5" fill="#00FF00"/><circle cx="116" cy="88" r="2.5" fill="#00FF00"/><ellipse cx="100" cy="105" rx="6" ry="7" fill="#FF69B4"/><path d="M 100 105 Q 92 113 84 110" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M 100 105 Q 108 113 116 110" stroke="#000" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>'
-        };
+        // Get current cat from URL or default to 'oscar-main'
+        let currentCat = new URLSearchParams(window.location.search).get('cat') || 'oscar-main';
+        let cats = JSON.parse(localStorage.getItem('cats')) || {};
+        let allPosts = JSON.parse(localStorage.getItem('allPosts')) || {};
         
-        let posts = JSON.parse(localStorage.getItem('oscarPosts')) || [];
-        let myCats = JSON.parse(localStorage.getItem('myCats')) || [];
-        
-        function getRandomFeline() {
-            return felines[Math.floor(Math.random() * felines.length)];
+        // Initialize cat data
+        if (!cats[currentCat]) {
+            cats[currentCat] = {
+                name: 'Oscar',
+                emoji: felineEmojis[Math.floor(Math.random() * felineEmojis.length)],
+                discovered: new Date().toISOString()
+            };
+            localStorage.setItem('cats', JSON.stringify(cats));
         }
+        
+        if (!allPosts[currentCat]) {
+            allPosts[currentCat] = [];
+        }
+        
+        const catImages = [
+            'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/0d0c8c9e9d0ba9c1b809adb0b9d3b3a5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182406Z&X-Amz-Expires=3600&X-Amz-Signature=4a1942bafe71c18497fe6bec5a098ff25de039cf2bd12c8c27fea37fc1a36c44&X-Amz-SignedHeaders=host',
+            'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/89e03893ce9e2f5bd17e280e614ae4c3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182357Z&X-Amz-Expires=3600&X-Amz-Signature=ff14d97685be921188f138d6dd6105f1d431f74e4472e74ee912c15148f6572e&X-Amz-SignedHeaders=host',
+            'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cf4a66eefbe6f976c844b7106d4e40b3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182356Z&X-Amz-Expires=3600&X-Amz-Signature=9f871b833dcddd4e536c5cfe2223e7d3029b9bbf1609f3fc1d7f8a3b8c3b5&X-Amz-SignedHeaders=host',
+            'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cfe46af1334a74738cc580c774ee6558?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182358Z&X-Amz-Expires=3600&X-Amz-Signature=f460217ebf48d3c2b75f5c5ce27b47c87fd1cde1bed9f662c0e76216497aa4f2&X-Amz-SignedHeaders=host',
+            'https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host'
+        ];
+        
+        const sampleMessages = [
+            'Spotted this beauty in the garden today! 🌿',
+            'Who knew cats could be this cute?',
+            'Oscar visited for hours this afternoon',
+            'The grey spots are absolutely perfect',
+            'Best day ever seeing this little furball',
+            'Coming back tomorrow hopefully! 🤞',
+            'Most adorable visitor we could ask for',
+            'This cat has stolen our hearts 💙'
+        ];
         
         function formatTime(date) {
             const now = new Date();
             const diff = now - date;
-            const seconds = Math.floor(diff / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const hours = Math.floor(minutes / 60);
+            const hours = Math.floor(diff / 3600000);
             const days = Math.floor(hours / 24);
             
             if (days > 0) return days + 'd';
             if (hours > 0) return hours + 'h';
-            if (minutes > 0) return minutes + 'm';
             return 'now';
         }
         
-        function renderFeed() {
-            const container = document.getElementById('feedContainer');
-            if (posts.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>No sightings yet.<br>Scan a QR code to start the adventure.</p></div>';
-                return;
-            }
-            
-            container.innerHTML = posts.map(post => {
-                const feline = post.feline || getRandomFeline();
-                const timeStr = formatTime(new Date(post.timestamp));
-                
-                let imageHtml = '';
-                if (post.image) {
-                    imageHtml = `<img src="${post.image}" class="post-image" alt="Oscar sighting">`;
-                }
-                
-                return `
-                    <div class="post">
-                        <div class="post-header">
-                            <div class="post-avatar">${svgAvatars[feline]}</div>
-                            <div class="post-meta">
-                                <span class="post-author">Oscar Spotter</span>
-                                <span class="post-time">${timeStr}</span>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p class="post-text">${post.text}</p>
-                            ${imageHtml}
-                            ${post.hashtags ? `<div class="post-hashtags">${post.hashtags.split(' ').map(tag => `<span>${tag}</span>`).join('')}</div>` : ''}
-                            <div class="post-actions">
-                                <button class="action-btn">❤️ Like</button>
-                                <button class="action-btn">💬 Comment</button>
-                                <button class="action-btn">📤 Share</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('totalPosts').textContent = posts.length;
+        function getRandomEmoji() {
+            return felineEmojis[Math.floor(Math.random() * felineEmojis.length)];
         }
         
-        function renderMyCats() {
-            const container = document.getElementById('myCatsList');
-            if (myCats.length === 0) {
-                container.innerHTML = '<p style="font-size: 12px; color: #65676b;">Scan QR codes to collect cats!</p>';
+        function renderSidebar() {
+            const sidebar = document.getElementById('sidebarItems');
+            sidebar.innerHTML = '';
+            
+            Object.entries(cats).forEach(([id, cat]) => {
+                const div = document.createElement('div');
+                div.className = 'sidebar-item' + (id === currentCat ? ' active' : '');
+                div.onclick = () => selectCat(id);
+                div.innerHTML = `
+                    <div class="sidebar-item-avatar">${cat.emoji}</div>
+                    <span class="sidebar-item-name">${cat.name}</span>
+                `;
+                sidebar.appendChild(div);
+            });
+        }
+        
+        function selectCat(catId) {
+            currentCat = catId;
+            window.history.replaceState({}, '', `?cat=${catId}`);
+            renderSidebar();
+            renderFeed();
+            updateHeader();
+        }
+        
+        function updateHeader() {
+            document.getElementById('feedTitle').textContent = cats[currentCat].name;
+            document.getElementById('feedSubtitle').textContent = `${allPosts[currentCat].length} sightings`;
+        }
+        
+        function renderFeed() {
+            const postsArea = document.getElementById('postsArea');
+            const posts = allPosts[currentCat] || [];
+            
+            if (posts.length === 0) {
+                postsArea.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👀</div>
+                        <div class="empty-state-text">No sightings yet</div>
+                        <div style="font-size: 12px; opacity: 0.6; margin-top: 4px;">Be the first to share!</div>
+                    </div>
+                `;
                 return;
             }
             
-            container.innerHTML = myCats.map((cat, idx) => `
-                <div class="cat-item" onclick="window.open('profile.html?id=' + '${cat.id}')">
-                    <div class="cat-avatar-small">${svgAvatars[cat.feline]}</div>
-                    <span>${cat.name}</span>
+            postsArea.innerHTML = posts.map((post, idx) => `
+                <div class="post">
+                    <div class="post-avatar">${post.avatar}</div>
+                    <div class="post-content">
+                        <div class="post-header">
+                            <div class="post-author">Spotter</div>
+                            <div class="post-time">${formatTime(new Date(post.timestamp))}</div>
+                        </div>
+                        <div class="post-text">${post.text}</div>
+                        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
+                        <div class="post-actions">
+                            <button class="action-btn">👁️ ${Math.floor(Math.random() * 100) + 10}</button>
+                            <button class="action-btn">💬 ${Math.floor(Math.random() * 20)}</button>
+                            <button class="action-btn">❤️ ${Math.floor(Math.random() * 50) + 5}</button>
+                        </div>
+                    </div>
                 </div>
             `).join('');
         }
         
-        window.addEventListener('load', () => {
-            if (posts.length === 0) {
-                const defaultPosts = [
+        function addInitialPosts() {
+            if (allPosts[currentCat].length === 0) {
+                const initialPosts = [
                     {
-                        text: "Just saw Oscar stretched out in the sunshine, looking absolutely content. Such grace.",
-                        hashtags: "#OscarSighting #CatsOfOscar #Peaceful",
-                        timestamp: new Date(Date.now() - 3600000),
-                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/0d0c8c9e9d0ba9c1b809adb0b9d3b3a5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182406Z&X-Amz-Expires=3600&X-Amz-Signature=4a1942bafe71c18497fe6bec5a098ff25de039cf2bd12c8c27fea37fc1a36c44&X-Amz-SignedHeaders=host",
-                        feline: 'lion'
+                        avatar: getRandomEmoji(),
+                        text: 'Just saw this beautiful white and grey cat lounging in the garden!',
+                        image: catImages[0],
+                        timestamp: new Date(Date.now() - 2 * 3600000).toISOString()
                     },
                     {
-                        text: "Oscar was playing with my garden toys today. The energy! The joy! This cat is pure personality.",
-                        hashtags: "#OscarSighting #PlayfulMoment #CatsOfOscar",
-                        timestamp: new Date(Date.now() - 7200000),
-                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/89e03893ce9e2f5bd17e280e614ae4c3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182357Z&X-Amz-Expires=3600&X-Amz-Signature=ff14d97685be921188f138d6dd6105f1d431f74e4472e74ee912c15148f6572e&X-Amz-SignedHeaders=host",
-                        feline: 'tiger'
+                        avatar: getRandomEmoji(),
+                        text: 'Oscar visited for hours today, playing on the porch! 🎾',
+                        image: catImages[1],
+                        timestamp: new Date(Date.now() - 4 * 3600000).toISOString()
                     },
                     {
-                        text: "The way Oscar watches the birds through the window is hypnotic. Those eyes miss nothing.",
-                        hashtags: "#OscarSighting #WindowWatching #MysteryOfOscar",
-                        timestamp: new Date(Date.now() - 10800000),
-                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cf4a66eefbe6f976c844b7106d4e40b3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182356Z&X-Amz-Expires=3600&X-Amz-Signature=9f871b833dcddd4e536c5cfe2223e7d3029b9bbf1609f3fc1d7f8a3b8c3b5&X-Amz-SignedHeaders=host",
-                        feline: 'leopard'
+                        avatar: getRandomEmoji(),
+                        text: 'The most adorable little furball. Grey spots are perfection.',
+                        image: catImages[2],
+                        timestamp: new Date(Date.now() - 6 * 3600000).toISOString()
                     },
                     {
-                        text: "Oscar curled up in his favorite spot today. This boy is living his best life.",
-                        hashtags: "#OscarSighting #CozyLife #CatsOfOscar",
-                        timestamp: new Date(Date.now() - 14400000),
-                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/cfe46af1334a74738cc580c774ee6558?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182358Z&X-Amz-Expires=3600&X-Amz-Signature=f460217ebf48d3c2b75f5c5ce27b47c87fd1cde1bed9f662c0e76216497aa4f2&X-Amz-SignedHeaders=host",
-                        feline: 'cheetah'
+                        avatar: getRandomEmoji(),
+                        text: 'Caught this little guy gazing out the window at birds 🐦',
+                        image: catImages[3],
+                        timestamp: new Date(Date.now() - 8 * 3600000).toISOString()
                     },
                     {
-                        text: "Oscar is absolutely flying around the garden today. Never seen a cat move that fast. Incredible.",
-                        hashtags: "#OscarSighting #FastFeline #CatsOfOscar",
-                        timestamp: new Date(Date.now() - 18000000),
-                        image: "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/198164/gemini/GEMINI_GENERATE_IMAGE/response/f94827700f6d994eb4afd25781485eec?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=601a6779e90fe0efe8105ef9073789f3%2F20260407%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260407T182429Z&X-Amz-Expires=3600&X-Amz-Signature=e58a95e5af07c3f3d71e2a17dd1a9c23831052b8683459e18dd7a5128fff6362&X-Amz-SignedHeaders=host",
-                        feline: 'puma'
+                        avatar: getRandomEmoji(),
+                        text: 'Pure joy watching Oscar run and jump around! So much energy! 💫',
+                        image: catImages[4],
+                        timestamp: new Date(Date.now() - 10 * 3600000).toISOString()
                     }
                 ];
                 
-                posts = defaultPosts;
-                localStorage.setItem('oscarPosts', JSON.stringify(posts));
+                allPosts[currentCat] = initialPosts;
+                localStorage.setItem('allPosts', JSON.stringify(allPosts));
             }
-            
+        }
+        
+        function openQRModal() {
+            document.getElementById('qrModal').classList.add('active');
+            generateQR();
+        }
+        
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.remove('active');
+        }
+        
+        function generateQR() {
+            const qrContainer = document.getElementById('qrCode');
+            qrContainer.innerHTML = '';
+            const qrUrl = `${window.location.origin}${window.location.pathname}?cat=${currentCat}`;
+            new QRCode(qrContainer, {
+                text: qrUrl,
+                width: 250,
+                height: 250,
+                colorDark: '#0f0f0f',
+                colorLight: '#ffffff'
+            });
+        }
+        
+        function downloadQR() {
+            const canvas = document.querySelector('#qrCode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `${cats[currentCat].name}_QR.png`;
+                link.click();
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            addInitialPosts();
+            renderSidebar();
             renderFeed();
-            renderMyCats();
+            updateHeader();
         });
     </script>
 </body>
