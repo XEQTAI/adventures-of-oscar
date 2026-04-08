@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscar Platform</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #fafafa; }
+.container { max-width: 600px; margin: 0 auto; padding: 24px; }
+.auth-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; margin-top: 100px; }
+.auth-box h1 { margin-bottom: 24px; }
+.auth-box input { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
+.auth-box button { width: 100%; padding: 12px; background: #000; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.auth-box button:hover { background: #333; }
+.dashboard { display: none; }
+.dashboard.active { display: block; }
+.header { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #e0e0e0; margin-bottom: 24px; }
+.carousel { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; }
+.items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; margin-top: 16px; }
+.item-card { background: #f5f5f5; padding: 16px; border-radius: 8px; text-align: center; cursor: pointer; }
+.item-card:hover { background: #eeeeee; }
+.create-btn { background: #000; color: #fff; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.create-btn:hover { background: #333; }
+.message { margin-top: 16px; padding: 12px; background: #e8f5e9; color: #2e7d32; border-radius: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div id="authBox" class="auth-box">
+  <h1>🐱 Oscar Platform</h1>
+  <p style="color: #666; margin-bottom: 32px;">Social network for physical objects</p>
+  <input type="email" id="emailInput" placeholder="your@email.com" />
+  <button onclick="signIn()">Send Magic Link</button>
+  <div id="message"></div>
+</div>
+
+<div id="dashboard" class="dashboard">
+  <div class="container">
+    <div class="header">
+      <div>
+        <h2>My Items</h2>
+        <p style="color: #666; font-size: 14px;" id="userEmail"></p>
+      </div>
+      <button onclick="signOut()" style="padding: 8px 16px; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer;">Sign Out</button>
+    </div>
+    
+    <div class="carousel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3>Your Collection</h3>
+        <button class="create-btn" onclick="createItem()">+ Create Item</button>
+      </div>
+      <div class="items-grid" id="itemsGrid">
+        <div class="item-card">
+          <div style="font-size: 48px; margin-bottom: 8px;">🐱</div>
+          <div style="font-weight: 600;">Oscar</div>
+          <div style="font-size: 12px; color: #666;">Sample item</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://cvpsciiwdgeigzjqozpa.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2cHNjaWl3ZGdlaWd6anFvenBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2NjM3MjcsImV4cCI6MjA5MTIzOTcyN30.WE5ZpZKK3jHW5boIBFEppJlegKbf--RBC-04IESYVQk'
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+async function checkAuth() {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (session) {
+    showDashboard(session.user)
+  }
+}
+
+async function signIn() {
+  const email = document.getElementById('emailInput').value
+  const { error } = await supabase.auth.signInWithOtp({ email })
+  
+  if (error) {
+    document.getElementById('message').innerHTML = '<div class="message" style="background: #ffebee; color: #c62828;">Error: ' + error.message + '</div>'
+  } else {
+    document.getElementById('message').innerHTML = '<div class="message">✉️ Check your email for the magic link!</div>'
+  }
+}
+
+async function signOut() {
+  await supabase.auth.signOut()
+  location.reload()
+}
+
+function showDashboard(user) {
+  document.getElementById('authBox').style.display = 'none'
+  document.getElementById('dashboard').classList.add('active')
+  document.getElementById('userEmail').textContent = user.email
+}
+
+function createItem() {
+  alert('Item creation coming soon! Database schema needs to be set up first.')
+}
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') {
+    showDashboard(session.user)
+  }
+})
+
+checkAuth()
+</script>
+</body>
+</html>
